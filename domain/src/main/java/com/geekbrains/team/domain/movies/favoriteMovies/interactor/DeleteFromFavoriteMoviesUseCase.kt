@@ -5,8 +5,8 @@ import com.geekbrains.team.domain.movies.favoriteMovies.repository.FavoriteMovie
 import io.reactivex.Completable
 import javax.inject.Inject
 
-class DeleteFromFavoriteUseCase @Inject constructor(private val repository: FavoriteMoviesRepository):
-    UseCaseCompletable<DeleteFromFavoriteUseCase.Params> {
+class DeleteFromFavoriteMoviesUseCase @Inject constructor(private val repository: FavoriteMoviesRepository):
+    UseCaseCompletable<DeleteFromFavoriteMoviesUseCase.Params> {
 
     override fun execute(params: Params): Completable {
         return repository.deleteMovieFromFavorite(params.id)

@@ -7,8 +7,7 @@ import javax.inject.Inject
 
 class AddFavoriteMovieIdUseCase @Inject constructor(
     private val repository: FavoriteMoviesRepository
-) :
-    UseCaseCompletable<AddFavoriteMovieIdUseCase.Params> {
+) : UseCaseCompletable<AddFavoriteMovieIdUseCase.Params> {
 
     override fun execute(params: Params): Completable =
         repository.addFavoriteMovieId(id = params.id)

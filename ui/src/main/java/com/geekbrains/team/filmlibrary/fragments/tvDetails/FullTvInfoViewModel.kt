@@ -7,17 +7,20 @@ import com.geekbrains.team.filmlibrary.model.PersonView
 import com.geekbrains.team.filmlibrary.model.TVShowView
 import androidx.lifecycle.MutableLiveData
 import com.geekbrains.team.domain.movies.similarMovie.interactor.GetSimilarMoviesUseCase
+import com.geekbrains.team.domain.tv.favorite.interactor.AddFavoriteSeriesUseCase
 import com.geekbrains.team.domain.tv.model.TVShow
 import com.geekbrains.team.domain.tv.similarTvShows.interactor.GetSimilarTVShowsUseCase
 import com.geekbrains.team.filmlibrary.model.toPersonView
 import com.geekbrains.team.filmlibrary.model.toTVShowView
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.observers.DisposableCompletableObserver
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class FullTvInfoViewModel @Inject constructor(
     private val getTVDetailsUseCase: GetTVDetailsUseCase,
-    private val getSimilarTVShowsUseCase: GetSimilarTVShowsUseCase
+    private val getSimilarTVShowsUseCase: GetSimilarTVShowsUseCase,
+    private val addFavoriteSeriesUseCase: AddFavoriteSeriesUseCase
 ): BaseViewModel() {
     val tvDetailsLiveData: MutableLiveData<TVShowView> = MutableLiveData()
     val actorsLiveData: MutableLiveData<List<PersonView>> = MutableLiveData()
@@ -50,5 +53,20 @@ class FullTvInfoViewModel @Inject constructor(
     private fun handleOnSuccessLoadSimilarMovies(movies: List<TVShow>) {
         similarTVShowsLiveData.value = movies.map { it.toTVShowView() }
         Log.d("loadSimilarMovies()", movies[1].posterPath)
+    }
+
+    fun addInFavorite(id: Int) {
+        addFavoriteSeriesUseCase.execute(AddFavoriteSeriesUseCase.Params(id)).subscribeOn(
+            Schedulers.io()
+        )
+            .observeOn(AndroidSchedulers.mainThread()).subscribe(object : DisposableCompletableObserver(){
+                override fun onComplete() {
+                    Log.d("addInFavorite() ", "Success")
+                }
+
+                override fun onError(e: Throwable) {
+                    Log.d("addInFavorite() ", e.message ?: "Error")
+                }
+            })
     }
 }

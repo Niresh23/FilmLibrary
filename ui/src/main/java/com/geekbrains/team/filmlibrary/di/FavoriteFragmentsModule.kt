@@ -30,4 +30,6 @@ abstract class FavoriteFragmentsModule {
     @IntoMap
     @ViewModelKey(FavoriteViewModel::class)
     abstract fun bindViewModel(viewModel: FavoriteViewModel): ViewModel
+
+
 }

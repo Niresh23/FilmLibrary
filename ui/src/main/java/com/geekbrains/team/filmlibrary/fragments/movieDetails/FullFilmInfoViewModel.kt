@@ -41,7 +41,7 @@ class FullFilmInfoViewModel @Inject constructor(
 
     fun loadSimilarMovies(id: Int, page: Int? = null) {
         val disposable = useCaseSimilarMovies.execute(GetSimilarMoviesUseCase.Param(id, page))
-            .subscribeOn(Schedulers.io())
+            .subscribeOn(io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(::handleOnSuccessLoadSimilarMovies, ::handleFailure)
         addDisposable(disposable)

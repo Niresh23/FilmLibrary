@@ -78,7 +78,7 @@ class FullActorInfoFragment: DaggerFragment() {
 
         viewModel.detailsLiveData.observe(viewLifecycleOwner, Observer {
             binding.actorInfo = it
-            hideProgressBar()
+
         })
 
         viewModel.movieCreditsLiveData.observe(viewLifecycleOwner, Observer {
@@ -139,11 +139,6 @@ class FullActorInfoFragment: DaggerFragment() {
             layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL,
                 false)
         }
-    }
-
-    private fun hideProgressBar() {
-        progress.visibility = View.GONE
-        scrollView.visibility = View.VISIBLE
     }
 
 

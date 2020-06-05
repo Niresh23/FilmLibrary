@@ -10,11 +10,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.geekbrains.team.filmlibrary.Const
 import com.geekbrains.team.filmlibrary.R
 import com.geekbrains.team.filmlibrary.adapters.*
 import com.geekbrains.team.filmlibrary.databinding.FullSeriesInfoFragmentBinding
@@ -83,29 +86,22 @@ class FullSeriesInfoFragment: DaggerFragment(), OnLikeClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        mIndicator = Indicator(context, indicator, indicator_item, infoAdapter)
+        onItemSelectedListener.showProgress()
+        initUI()
         startObservers()
-        loadMovieDetails()
+        savedInstanceState ?: loadMovieDetails()
         showMovieDetails()
     }
 
     override fun onResume() {
         super.onResume()
-        showProgressBar()
         infoAdapter.clear()
         loadMovieDetails()
-    }
-
-    private fun showProgressBar() {
-        progress.visibility = View.VISIBLE
-        scrollView.visibility = View.GONE
     }
 
     private fun startObservers() {
         viewModel.failure.observe(viewLifecycleOwner, Observer { msg ->
             Toast.makeText(context, msg.localizedMessage, Toast.LENGTH_LONG).show()
-            hideProgressBar()
         })
 
         viewModel.tvDetailsLiveData.observe(viewLifecycleOwner, Observer { data ->
@@ -114,7 +110,7 @@ class FullSeriesInfoFragment: DaggerFragment(), OnLikeClickListener {
                 mIndicator.startIndicators()
                 mIndicator.setCurrentIndicator(0)
                 binding.tvShow = it
-                hideProgressBar()
+                onItemSelectedListener.hideProgress()
             }
         })
 
@@ -137,9 +133,15 @@ class FullSeriesInfoFragment: DaggerFragment(), OnLikeClickListener {
         })
     }
 
-    private fun hideProgressBar() {
-        progress.visibility = View.GONE
-        scrollView.visibility = View.VISIBLE
+    private fun initUI() {
+        val navController = findNavController()
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
+        mIndicator = Indicator(context, indicator, indicator_item, infoAdapter)
+        description_tv.setOnClickListener {
+            if (description_tv.maxLines == Const.DESCRIPTION_MAX_LINES)
+                description_tv.maxLines = Int.MAX_VALUE
+            else description_tv.maxLines = Const.DESCRIPTION_MAX_LINES
+        }
     }
 
     private fun loadMovieDetails() {
@@ -154,6 +156,7 @@ class FullSeriesInfoFragment: DaggerFragment(), OnLikeClickListener {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
                     mIndicator.setCurrentIndicator(position)
+
                 }
             })
         }
@@ -172,6 +175,6 @@ class FullSeriesInfoFragment: DaggerFragment(), OnLikeClickListener {
     }
 
     override fun onLikeClick(id: Int) {
-        TODO()
+        viewModel.addInFavorite(id)
     }
 }

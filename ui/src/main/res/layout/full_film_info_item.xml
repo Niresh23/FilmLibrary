@@ -221,6 +221,7 @@
                     android:background="@android:color/transparent"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_favorite_unactive"
+                    android:onClick="@{() -> listener.onLikeClick(movie.id)}"
                     tools:ignore="ContentDescription" />
 
                 <TextView

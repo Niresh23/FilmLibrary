@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.geekbrains.team.data.database.AppDatabase
 import com.geekbrains.team.data.movies.favoriteMovies.dao.FavoriteMoviesDao
+import com.geekbrains.team.data.tv.favorite.dao.FavoriteSeriesDao
 import dagger.Module
 import dagger.Provides
 import javax.inject.Inject
@@ -19,12 +20,18 @@ class DatabaseModule{
             context.applicationContext,
             AppDatabase::class.java,
             "FavoriteMovies.db"
-        ).build()
+        ).fallbackToDestructiveMigration().build()
     }
 
     @Singleton
     @Provides
     fun provideFavoriteMoviesDao(database: AppDatabase): FavoriteMoviesDao {
         return database.favoriteMoviesDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideFavoriteSeriesDao(database: AppDatabase): FavoriteSeriesDao {
+        return database.favoriteSeriesDao()
     }
 }
