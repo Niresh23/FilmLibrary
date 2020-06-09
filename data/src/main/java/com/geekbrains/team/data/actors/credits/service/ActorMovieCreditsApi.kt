@@ -1,7 +1,6 @@
 package com.geekbrains.team.data.actors.credits.service
 
-import com.geekbrains.team.data.actors.credits.service.model.ActorCreditsResponse
-import com.geekbrains.team.data.movies.detailsMovies.service.model.MovieDetailsResponse
+import com.geekbrains.team.data.actors.credits.service.model.ActorMovieCreditsResponse
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -13,5 +12,5 @@ interface ActorMovieCreditsApi {
         @Path("person_id") id: Int,
         @Query("api_key") apiKey: String,
         @Query("language") language: String
-    ): Single<ActorCreditsResponse>
+    ): Single<ActorMovieCreditsResponse>
 }

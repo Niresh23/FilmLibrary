@@ -28,13 +28,13 @@ class FavoriteTVShowFragment: DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val viewModel by viewModels<FavoriteViewModel>({activity as MainActivity }) {viewModelFactory}
+    private val viewModel by viewModels<FavoriteViewModel>({activity as MainActivity }) { viewModelFactory }
     private lateinit var listener: OnItemSelectedListener
 
     private val mAdapter: ItemsAdapter<TVShowView, OnItemSelectedListener> by lazy {
-        ItemsAdapter<TVShowView, OnItemSelectedListener>(
+        ItemsAdapter<TVShowView, OnItemSelectedListener> (
             clickListener = listener,
-            layout = R.layout.landscape_card_item
+            layout = R.layout.landscape_tv_show_card_item
         )
     }
 

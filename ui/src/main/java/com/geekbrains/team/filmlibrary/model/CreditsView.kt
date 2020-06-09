@@ -8,12 +8,14 @@ data class CreditsView(
 ) {
     data class CastCredit(
         val id: Int,
+        val title: String,
         val character: String,
         val posterPath: String?
     )
 
     data class CrewCredit(
         val id: Int,
+        val title: String,
         val job: String,
         val posterPath: String?
     )
@@ -24,12 +26,14 @@ fun ActorCreditsInfo.toCreditsView(): CreditsView =
         cast = this.cast.map { CreditsView.CastCredit(
             id = it.id,
             character = it.character,
-            posterPath = it.posterPath
+            posterPath = it.posterPath,
+            title = it.title
         )},
         crew = this.crew.map { CreditsView.CrewCredit(
             id = it.id,
             job = it.job,
-            posterPath = it.posterPath
+            posterPath = it.posterPath,
+            title = it.title
         ) }
     )
 
@@ -37,7 +41,7 @@ fun CreditsView.CastCredit.toPersonView(): PersonView =
     PersonView(
         id = this.id,
         character = character,
-        name = "",
+        name = title,
         posterPath = this.posterPath ?: ""
     )
 
@@ -46,5 +50,5 @@ fun CreditsView.CrewCredit.toPersonView(): PersonView =
         id = this.id,
         character = this.job,
         posterPath = this.posterPath ?: "",
-        name = ""
+        name = title
     )

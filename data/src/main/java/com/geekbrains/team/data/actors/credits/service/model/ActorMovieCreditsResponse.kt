@@ -4,7 +4,7 @@ import com.geekbrains.team.data.Const
 import com.geekbrains.team.domain.actors.model.ActorCreditsInfo
 import com.google.gson.annotations.SerializedName
 
-data class ActorCreditsResponse(
+data class ActorMovieCreditsResponse(
     val id: Int,
     val cast: List<MovieInfo>,
     val crew: List<JobInfo>
@@ -30,7 +30,7 @@ data class ActorCreditsResponse(
     )
 }
 
-fun ActorCreditsResponse.toActorCreditsInfo() = ActorCreditsInfo(
+fun ActorMovieCreditsResponse.toActorCreditsInfo() = ActorCreditsInfo(
     id = this.id,
     cast = this.cast.map{ ActorCreditsInfo.MovieInfo(
         id = it.id,

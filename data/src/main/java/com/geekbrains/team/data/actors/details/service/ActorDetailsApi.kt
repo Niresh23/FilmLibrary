@@ -1,6 +1,5 @@
 package com.geekbrains.team.data.actors.details.service
 
-import com.geekbrains.team.data.actors.credits.service.model.ActorCreditsResponse
 import com.geekbrains.team.data.actors.details.service.model.ActorDetailsResponse
 import io.reactivex.Single
 import retrofit2.http.GET

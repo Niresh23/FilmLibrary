@@ -8,11 +8,10 @@ data class ActorInformation(
     val gender: Int,
     val biography: String,
     val popularity: Double,
-    var profilePath: String? = null,
+    val profilePath: String?,
     val alsoKnownAs: List<String>,
     val placeOfBirth: String?,
-    val imdbId: String?,
+    val imdbId: String,
     val homepage: String?,
-    var movieCredits: ActorCreditsInfo? = null,
-    var tvCredits: ActorCreditsInfo? = null
+    val knownFor: String
 )

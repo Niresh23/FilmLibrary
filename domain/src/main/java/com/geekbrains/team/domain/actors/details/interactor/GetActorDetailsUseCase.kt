@@ -1,5 +1,6 @@
 package com.geekbrains.team.domain.actors.details.interactor
 
+import android.util.Log
 import com.geekbrains.team.domain.actors.details.repository.ActorDetailsRepository
 import com.geekbrains.team.domain.actors.credits.repository.ActorMovieCreditsRepository
 import com.geekbrains.team.domain.actors.credits.repository.ActorTVCreditsRepository
@@ -17,20 +18,23 @@ class GetActorDetailsUseCase @Inject constructor(
     UseCase<ActorInformation, GetActorDetailsUseCase.Params> {
 
     override fun execute(params: Params): Single<out ActorInformation> {
-        return Single.zip(
-            actorDetailsRepository.fetch(params.id),
-            actorMovieCreditsRepository.fetch(params.id),
-            actorTVCreditsRepository.fetch(params.id),
-            Function3 { details, movieCredits, tvCredits ->
-                details.movieCredits = movieCredits
-                details.tvCredits = tvCredits
-
-                details
-            }
-        )
+        Log.e("GetActorDetailsUseCase", "execute()")
+        return actorDetailsRepository.fetch(params.id)
     }
 
     data class Params(
         val id: Int
     )
 }
+//
+//return Single.zip(
+//actorDetailsRepository.fetch(params.id),
+//actorMovieCreditsRepository.fetch(params.id),
+//actorTVCreditsRepository.fetch(params.id),
+//Function3 { details, movieCredits, tvCredits ->
+//    details.movieCredits = movieCredits
+//    details.tvCredits = tvCredits
+//    Log.e("GetActorDetailsUseCase", details.name)
+//    details
+//}
+//)

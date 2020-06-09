@@ -45,27 +45,78 @@
             android:id="@+id/scroll"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/abl">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/abl">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/topPager"
-                    android:layout_width="match_parent"
-                    android:layout_height="250dp"
-                    app:layout_constraintTop_toTopOf="parent" />
+                android:layout_height="match_parent">
 
                 <LinearLayout
-                    android:id="@+id/indicator"
-                    android:layout_width="0dp"
+                    android:id="@+id/information"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="15dp"
-                    app:layout_constraintEnd_toEndOf="@id/topPager"
-                    app:layout_constraintStart_toStartOf="@id/topPager"
-                    app:layout_constraintTop_toBottomOf="@id/topPager" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/photo_iv"
+                        android:layout_width="80dp"
+                        android:layout_height="120dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="24dp"
+                        app:poster="@{actorInfo.profilePath}"
+                        tools:ignore="ContentDescription" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="16dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/actor_name"
+                            style="@style/Headline2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@{actorInfo.name}" />
+
+                        <TextView
+                            style="@style/Subtitle2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Known for" />
+
+                        <TextView
+                            android:id="@+id/known_for"
+                            style="@style/Subtitle2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@{actorInfo.knownFor}" />
+
+                        <TextView
+                            style="@style/Subtitle2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Place and date of birth:" />
+
+                        <TextView
+                            style="@style/Subtitle2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@{actorInfo.birthday}" />
+
+                        <TextView
+                            style="@style/Subtitle2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@{actorInfo.placeOfBirth}" />
+                    </LinearLayout>
+                </LinearLayout>
 
                 <View
                     android:id="@+id/line1"
@@ -73,31 +124,23 @@
                     android:layout_height="1dp"
                     android:layout_marginTop="35dp"
                     android:background="@color/IconSecondary"
-                    app:layout_constraintTop_toBottomOf="@id/indicator" />
-
-                <ImageView
-                    android:id="@+id/photo_iv"
-                    android:layout_width="80dp"
-                    android:layout_height="120dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="24dp"
-                    app:poster = "@{actorInfo.profilePath}"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/line1"
-                    tools:ignore="ContentDescription" />
+                    app:layout_constraintTop_toBottomOf="@id/information" />
 
                 <TextView
                     android:id="@+id/description_tv"
                     style="@style/Subtitle2"
-                    android:layout_width="224dp"
-                    android:layout_height="120dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
                     android:text="@{actorInfo.biography}"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/photo_iv"
                     app:layout_constraintTop_toBottomOf="@id/line1" />
 
+
                 <View
+
                     android:id="@+id/line2"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -110,10 +153,10 @@
                     style="@style/Headline2"
                     android:layout_width="wrap_content"
                     android:layout_height="16dp"
-                    android:layout_marginStart="16dp"
                     android:layout_marginTop="24dp"
+                    android:layout_marginStart="16dp"
                     android:gravity="bottom"
-                    android:text="@string/filmography"
+                    android:text="Acting in movies"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/line2" />
 
@@ -133,7 +176,6 @@
                     android:id="@+id/credits_cast_movies_rv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
                     android:layout_marginTop="12dp"
                     android:layout_marginEnd="16dp"
                     app:layout_constraintTop_toBottomOf="@id/filmography_tv" />
@@ -143,10 +185,10 @@
                     style="@style/Headline2"
                     android:layout_width="wrap_content"
                     android:layout_height="16dp"
-                    android:layout_marginStart="16dp"
                     android:layout_marginTop="24dp"
+                    android:layout_marginStart="16dp"
                     android:gravity="bottom"
-                    android:text="@string/filmography"
+                    android:text="Acting in TV shows"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/credits_cast_movies_rv" />
 
@@ -154,29 +196,19 @@
                     android:id="@+id/credits_cast_tvshows_rv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
                     android:layout_marginTop="12dp"
                     android:layout_marginEnd="16dp"
-                    app:layout_constraintTop_toBottomOf="@id/filmography_tv" />
-
-
-                <View
-                    android:id="@+id/line4"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="28dp"
-                    android:background="@color/IconSecondary"
-                    app:layout_constraintTop_toBottomOf="@id/credits_cast_tvshows_rv" />
+                    app:layout_constraintTop_toBottomOf="@id/credits_cast_movies_tv" />
 
                 <TextView
                     android:id="@+id/credits_crew_movies_tv"
                     style="@style/Headline2"
                     android:layout_width="wrap_content"
                     android:layout_height="16dp"
-                    android:layout_marginStart="16dp"
                     android:layout_marginTop="24dp"
+                    android:layout_marginStart="16dp"
                     android:gravity="bottom"
-                    android:text="@string/awards"
+                    android:text="Product movies"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/credits_cast_tvshows_rv" />
 
@@ -184,20 +216,19 @@
                     android:id="@+id/credits_crew_movies_rv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
                     android:layout_marginTop="12dp"
                     android:layout_marginEnd="16dp"
                     app:layout_constraintTop_toBottomOf="@id/credits_crew_movies_tv" />
 
                 <TextView
-                    android:id="@+id/credirts_crew_tvshows_tv"
-                    style="@style/Subtitle2"
+                    android:id="@+id/credits_crew_tvshows_tv"
+                    style="@style/Headline2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
+                    android:layout_marginStart="16dp"
                     android:gravity="bottom"
-                    android:text=""
+                    android:text="Product TV shows"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/credits_crew_movies_rv" />
 
@@ -205,10 +236,8 @@
                     android:id="@+id/credits_crew_tvshows_rv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
                     android:layout_marginTop="12dp"
-                    android:layout_marginEnd="16dp"
-                    app:layout_constraintTop_toBottomOf="@id/credirts_crew_tvshows_tv" />
+                    app:layout_constraintTop_toBottomOf="@id/credits_crew_tvshows_tv" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

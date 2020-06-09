@@ -1,14 +1,16 @@
 package com.geekbrains.team.filmlibrary.fragments.actorDetails
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.geekbrains.team.filmlibrary.R
-import com.geekbrains.team.filmlibrary.adapters.ImagesAdapter
 import com.geekbrains.team.filmlibrary.databinding.FullActorInfoFragmentBinding
 import com.geekbrains.team.filmlibrary.model.PersonView
 import dagger.android.support.DaggerFragment
@@ -19,15 +21,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.geekbrains.team.filmlibrary.adapters.ItemsAdapter
 import com.geekbrains.team.filmlibrary.adapters.OnItemSelectedListener
-import com.geekbrains.team.filmlibrary.model.CreditsView
 import com.geekbrains.team.filmlibrary.model.toPersonView
 import com.geekbrains.team.filmlibrary.util.DiffUtilsCallback
 import kotlinx.android.synthetic.main.full_actor_info_fragment.*
-import kotlinx.android.synthetic.main.full_film_info_fragment.*
-import kotlinx.android.synthetic.main.full_film_info_fragment.scrollView
-import kotlinx.android.synthetic.main.full_series_info_fragment.*
 import javax.inject.Inject
 
+@Suppress("NAME_SHADOWING")
 class FullActorInfoFragment: DaggerFragment() {
     private val args: FullActorInfoFragmentArgs by navArgs()
     @Inject
@@ -35,10 +34,6 @@ class FullActorInfoFragment: DaggerFragment() {
 
     private val viewModel by viewModels<FullActorInfoViewModel> {viewModelFactory}
     lateinit var binding: FullActorInfoFragmentBinding
-
-    private val infoAdapter by lazy {
-        ImagesAdapter<PersonView, OnItemSelectedListener>(null, layout = R.layout.full_actor_info_item)
-    }
 
     private val movieCastAdapter by lazy {
         ItemsAdapter<PersonView, OnItemSelectedListener>(null, layout = R.layout.small_actor_card_item)
@@ -61,55 +56,63 @@ class FullActorInfoFragment: DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.full_actor_info_fragment, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.full_actor_info_fragment,
+            null, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         startObservers()
         viewModel.loadDetails(args.id)
+        viewModel.loadMovieCredits(args.id)
+        viewModel.loadTVCredits(args.id)
         showActorDetails()
     }
 
     private fun startObservers() {
         viewModel.failure.observe(viewLifecycleOwner, Observer {
             Toast.makeText(context, it.localizedMessage, Toast.LENGTH_LONG).show()
+            Log.d("my log", it.message ?: "NO MESSAGE")
         })
 
         viewModel.detailsLiveData.observe(viewLifecycleOwner, Observer {
             binding.actorInfo = it
-
+            Log.d("my log", it.biography)
+            Log.d("my log", it.profilePath ?: "NO POSTER")
         })
 
         viewModel.movieCreditsLiveData.observe(viewLifecycleOwner, Observer {
-            it.cast?.map { it.toPersonView() }.apply {
-                val diffUtilCallback = DiffUtilsCallback(movieCastAdapter.data, this!!)
+            it.cast?.map { cast -> cast.toPersonView() }?.apply {
+                val diffUtilCallback = DiffUtilsCallback(movieCastAdapter.data, this)
                 val diffResult = DiffUtil.calculateDiff(diffUtilCallback)
                 movieCastAdapter.update(this)
                 diffResult.dispatchUpdatesTo(movieCastAdapter)
+                Log.d("my log", this[0].name)
             }
-
-            it.crew?.map { it.toPersonView() }.apply {
-                val diffUtilCallback = DiffUtilsCallback(movieCrewAdapter.data, this!!)
+            it.crew?.map { crew -> crew.toPersonView() }?.apply {
+                val diffUtilCallback = DiffUtilsCallback(movieCrewAdapter.data, this)
                 val diffResult = DiffUtil.calculateDiff(diffUtilCallback)
                 movieCrewAdapter.update(this)
                 diffResult.dispatchUpdatesTo(movieCrewAdapter)
+                Log.d("my log", this[0].name)
             }
         })
 
-        viewModel.tvCreditsLiveData.observe(viewLifecycleOwner, Observer {
-            it.cast?.map { it.toPersonView() }.apply {
-                val diffUtilCallback = DiffUtilsCallback(tvCastAdapter.data, this!!)
+        viewModel.tvCreditsLiveData.observe(viewLifecycleOwner, Observer { it ->
+            it.cast?.map { cast -> cast.toPersonView() }?.apply {
+                val diffUtilCallback = DiffUtilsCallback(tvCastAdapter.data, this)
                 val diffResult = DiffUtil.calculateDiff(diffUtilCallback)
                 tvCastAdapter.update(this)
                 diffResult.dispatchUpdatesTo(tvCastAdapter)
+                Log.e("my log", this[0].name)
             }
-
-            it.crew?.map { it.toPersonView() }.apply {
-                val diffUtilCallback = DiffUtilsCallback(tvCrewAdapter.data, this!!)
+            it.crew?.map {crew -> crew.toPersonView() }?.apply {
+                val diffUtilCallback = DiffUtilsCallback(tvCrewAdapter.data, this)
                 val diffResult = DiffUtil.calculateDiff(diffUtilCallback)
                 tvCrewAdapter.update(this)
                 diffResult.dispatchUpdatesTo(tvCrewAdapter)
+                Log.e("my log", this[0].name)
             }
         })
     }

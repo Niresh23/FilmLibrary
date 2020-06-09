@@ -1,5 +1,6 @@
 package com.geekbrains.team.filmlibrary.fragments.actorDetails
 
+import android.util.Log
 import com.geekbrains.team.domain.actors.credits.interactor.GetActorMovieCreditsUseCase
 import com.geekbrains.team.domain.actors.credits.interactor.GetActorTVCreditsUseCase
 import com.geekbrains.team.domain.actors.details.interactor.GetActorDetailsUseCase
@@ -24,31 +25,40 @@ class FullActorInfoViewModel @Inject constructor(
     val tvCreditsLiveData= MutableLiveData<CreditsView>()
 
     fun loadDetails(id: Int) {
-        getActorDetailsUseCase.execute(params = GetActorDetailsUseCase.Params(id))
+        val disposable = getActorDetailsUseCase.execute(params = GetActorDetailsUseCase.Params(id = id))
             .subscribeOn(io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(::handleOnSuccessLoadActorDetails, ::handleFailure)
-
-        getActorMovieCreditsUseCase.execute(GetActorMovieCreditsUseCase.Params(id))
+        addDisposable(disposable)
+    }
+    fun loadMovieCredits(id: Int) {
+        val disposable = getActorMovieCreditsUseCase.execute(params = GetActorMovieCreditsUseCase.Params(id = id))
             .subscribeOn(io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(::handleOnSuccessLoadMovieCredits, ::handleFailure)
+        addDisposable(disposable)
+    }
 
-        getActorTVCreditsUseCase.execute(GetActorTVCreditsUseCase.Params(id))
+    fun loadTVCredits(id: Int) {
+        val disposable = getActorTVCreditsUseCase.execute(params = GetActorTVCreditsUseCase.Params(id = id))
             .subscribeOn(io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(::handleOnSuccessLoadTVCredits, ::handleFailure)
+        addDisposable(disposable)
     }
 
     private fun handleOnSuccessLoadActorDetails(details: ActorInformation) {
         detailsLiveData.value = details
+        Log.e("VIEW_MODEL", details.name)
     }
 
     private fun handleOnSuccessLoadMovieCredits(credits: ActorCreditsInfo) {
         movieCreditsLiveData.value = credits.toCreditsView()
+        Log.e("VIEW_MODEL", credits.id.toString())
     }
 
     private fun handleOnSuccessLoadTVCredits(credits: ActorCreditsInfo) {
         tvCreditsLiveData.value = credits.toCreditsView()
+        Log.e("VIEW_MODEL", credits.id.toString())
     }
 }

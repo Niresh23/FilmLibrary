@@ -1,5 +1,6 @@
 package com.geekbrains.team.filmlibrary.fragments.favorites
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.geekbrains.team.domain.base.None
 import com.geekbrains.team.domain.movies.favoriteMovies.interactor.AddFavoriteMovieIdUseCase
@@ -42,9 +43,11 @@ class FavoriteViewModel @Inject constructor(
             .subscribeOn(io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(::handleOnSuccessLoadFavoriteSeries, ::handleFailure)
+        addDisposable(disposable)
     }
 
     private fun handleOnSuccessLoadFavoriteSeries(data: List<TVShow>) {
         favoriteSeriesLiveData.value = data.map { it.toTVShowView() }
+        Log.e("Favorite", data[0].name)
     }
 }
