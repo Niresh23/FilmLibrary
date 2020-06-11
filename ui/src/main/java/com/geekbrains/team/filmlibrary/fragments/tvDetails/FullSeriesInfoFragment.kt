@@ -131,6 +131,9 @@ class FullSeriesInfoFragment: DaggerFragment(), OnLikeClickListener {
                 diffResult.dispatchUpdatesTo(similarTVShowAdapter)
             }
         })
+        viewModel.addInFavorite.observe(viewLifecycleOwner, Observer { message ->
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        })
     }
 
     private fun initUI() {

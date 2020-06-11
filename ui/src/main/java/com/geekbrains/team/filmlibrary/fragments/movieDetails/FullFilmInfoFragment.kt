@@ -149,6 +149,9 @@ class FullFilmInfoFragment : DaggerFragment(), OnLikeClickListener {
                 diffResult.dispatchUpdatesTo(similarMoviesAdapter)
             }
         })
+        viewModel.addInFavorite.observe(viewLifecycleOwner, Observer { message ->
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        })
     }
 
     private fun loadMovieDetails() {

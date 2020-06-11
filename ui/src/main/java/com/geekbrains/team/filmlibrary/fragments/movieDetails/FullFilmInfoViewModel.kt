@@ -27,12 +27,13 @@ class FullFilmInfoViewModel @Inject constructor(
     val actorsLiveData: MutableLiveData<List<PersonView>> = MutableLiveData()
     val crewLiveData: MutableLiveData<List<PersonView>> = MutableLiveData()
     val similarMoviesLiveData: MutableLiveData<List<MovieView>> = MutableLiveData()
+    val addInFavorite: MutableLiveData<String> = MutableLiveData()
 
     var currentMoviePoster = 0
 
     fun loadMovieInfo(id: Int) {
         val disposable = useCaseMovieInfo.execute(params = GetMovieDetailsUseCase.Params(id = id))
-            .subscribeOn(Schedulers.io())
+            .subscribeOn(io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(::handleOnSuccessLoadMovieDetails, ::handleFailure)
 
@@ -51,11 +52,11 @@ class FullFilmInfoViewModel @Inject constructor(
         addFavoriteMovieIdUseCase.execute(AddFavoriteMovieIdUseCase.Params(id)).subscribeOn(io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe(object : DisposableCompletableObserver(){
             override fun onComplete() {
-                Log.d("addInFavorite() ", "Success")
+                addInFavorite.value = "Movie added in favorite"
             }
 
             override fun onError(e: Throwable) {
-                Log.d("addInFavorite() ", e.message ?: "Error")
+                handleFailure(e)
             }
         })
     }

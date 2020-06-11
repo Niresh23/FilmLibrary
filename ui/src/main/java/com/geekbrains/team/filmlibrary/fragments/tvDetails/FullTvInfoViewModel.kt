@@ -26,6 +26,7 @@ class FullTvInfoViewModel @Inject constructor(
     val actorsLiveData: MutableLiveData<List<PersonView>> = MutableLiveData()
     val crewLiveData: MutableLiveData<List<PersonView>> = MutableLiveData()
     val similarTVShowsLiveData: MutableLiveData<List<TVShowView>> = MutableLiveData()
+    val addInFavorite: MutableLiveData<String> = MutableLiveData()
 
     fun loadTVShowInfo(id: Int) {
         val disposable = getTVDetailsUseCase.execute(params = GetTVDetailsUseCase.Params(id = id))
@@ -61,11 +62,11 @@ class FullTvInfoViewModel @Inject constructor(
         )
             .observeOn(AndroidSchedulers.mainThread()).subscribe(object : DisposableCompletableObserver(){
                 override fun onComplete() {
-                    Log.d("addInFavorite() ", "Success")
+                    addInFavorite.value = "TV show added in favorite"
                 }
 
                 override fun onError(e: Throwable) {
-                    Log.d("addInFavorite() ", e.message ?: "Error")
+                    handleFailure(e)
                 }
             })
     }
