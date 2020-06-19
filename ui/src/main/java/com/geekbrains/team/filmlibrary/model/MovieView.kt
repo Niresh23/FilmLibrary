@@ -44,7 +44,8 @@ fun Movie.toMovieView() = MovieView(
     producer = producer ?: "",
     writer = writer ?: "",
     director = director ?: "",
-    releaseYear = releaseYear
+    releaseYear = releaseYear,
+    like = this.like
 )
 
 private fun Movie.movieImages(): List<String> = images?.let {

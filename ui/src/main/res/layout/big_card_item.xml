@@ -23,22 +23,21 @@
 
     </data>
 
-    <!--    <androidx.cardview.widget.CardView-->
-    <!--        android:id="@+id/series_card"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginStart="15dp"-->
-    <!--        android:layout_marginTop="8dp"-->
-    <!--        android:layout_marginEnd="15dp"-->
-    <!--        android:layout_marginBottom="15dp"-->
-    <!--        android:onClick="@{() -> listener.openMovieDetails(movie == null ? tvShow.id : movie.id)}"-->
-    <!--        app:cardCornerRadius="4dp"-->
-    <!--        app:cardElevation="8dp">-->
+<!--        <androidx.cardview.widget.CardView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="15dp"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:layout_marginEnd="15dp"-->
+<!--            android:layout_marginBottom="15dp"-->
+<!--            app:cardCornerRadius="4dp"-->
+<!--            app:cardElevation="8dp">-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:onClick="@{() -> listener.openMovieDetails(movie == null ? tvShow.id : movie.id)}">
+        android:onClick="@{() -> listener.openMovieDetails(movie == null ? tvShow.id : movie.id)}"
+        android:clipToPadding="false">
 
         <ImageView
             android:id="@+id/title_iv"
@@ -46,6 +45,8 @@
             android:layout_height="180dp"
             android:layout_marginBottom="78dp"
             android:scaleType="centerCrop"
+            android:layout_marginEnd="2dp"
+            android:layout_marginStart="2dp"
             android:src="@drawable/ic_no_backdrop"
             app:backdrop='@{movie != null ? movie.backdropPath : tvShow.backdropPath}'
             app:layout_constraintBottom_toBottomOf="parent"
@@ -58,7 +59,7 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="4dp"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_favorite_inactive"
+            android:src="@{movie.like ? @drawable/ic_favorite_active :@drawable/ic_favorite_inactive}"
             app:layout_constraintEnd_toEndOf="@id/title_iv"
             app:layout_constraintTop_toTopOf="@id/title_iv"
             tools:ignore="ContentDescription" />
@@ -93,9 +94,10 @@
         <TextView
             android:id="@+id/title_tv"
             style="@style/Headline2"
-            android:layout_width="249dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginBottom="6dp"
             android:ellipsize="end"
             android:gravity="bottom"
@@ -103,6 +105,7 @@
             android:scrollHorizontally="true"
             android:text="@{movie != null ? movie.title : tvShow.name}"
             app:layout_constraintBottom_toTopOf="@id/original_title_tv"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/cover_iv" />
 
         <TextView
@@ -119,29 +122,30 @@
             android:text="@{movie != null ? movie.originalTitle : tvShow.originalName}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/cover_iv" />
-
-        <TextView
-            android:id="@+id/rating_tv"
-            style="@style/Subtitle1"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_marginEnd="12dp"
-            android:layout_marginBottom="8dp"
-            android:gravity="center"
-            android:text="@{movie != null ? movie.voteAverage : tvShow.voteAverage}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <ImageView
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginBottom="8dp"
-            android:adjustViewBounds="true"
-            android:src="@drawable/ic_imdb"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:ignore="ContentDescription" />
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_imdb"
+                tools:ignore="ContentDescription" />
+            <TextView
+                android:id="@+id/rating_tv"
+                style="@style/Subtitle1"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:gravity="center"
+                android:text="@{movie != null ? movie.voteAverage : tvShow.voteAverage}" />
+        </LinearLayout>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
-    <!--</androidx.cardview.widget.CardView>-->
+<!--    </androidx.cardview.widget.CardView>-->
 </layout>

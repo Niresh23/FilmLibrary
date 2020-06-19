@@ -11,7 +11,7 @@ import io.reactivex.Single
 @Dao
 interface FavoriteSeriesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(movie: FavoriteSeriesEntity): Completable
+    fun insert(series: FavoriteSeriesEntity): Completable
 
     @Query("DELETE FROM FavoriteSeriesEntity WHERE id = :seriesId")
     fun delete(seriesId: Int): Completable

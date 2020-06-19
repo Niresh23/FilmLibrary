@@ -10,6 +10,7 @@ import com.geekbrains.team.domain.movies.similarMovie.interactor.GetSimilarMovie
 import com.geekbrains.team.domain.tv.favorite.interactor.AddFavoriteSeriesUseCase
 import com.geekbrains.team.domain.tv.model.TVShow
 import com.geekbrains.team.domain.tv.similarTvShows.interactor.GetSimilarTVShowsUseCase
+import com.geekbrains.team.domain.tv.waiting.interactor.AddWaitingSeriesIdUseCase
 import com.geekbrains.team.filmlibrary.model.toPersonView
 import com.geekbrains.team.filmlibrary.model.toTVShowView
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -20,14 +21,15 @@ import javax.inject.Inject
 class FullTvInfoViewModel @Inject constructor(
     private val getTVDetailsUseCase: GetTVDetailsUseCase,
     private val getSimilarTVShowsUseCase: GetSimilarTVShowsUseCase,
-    private val addFavoriteSeriesUseCase: AddFavoriteSeriesUseCase
+    private val addFavoriteSeriesUseCase: AddFavoriteSeriesUseCase,
+    private val addWaitingSeriesIdUseCase: AddWaitingSeriesIdUseCase
 ): BaseViewModel() {
     val tvDetailsLiveData: MutableLiveData<TVShowView> = MutableLiveData()
     val actorsLiveData: MutableLiveData<List<PersonView>> = MutableLiveData()
     val crewLiveData: MutableLiveData<List<PersonView>> = MutableLiveData()
     val similarTVShowsLiveData: MutableLiveData<List<TVShowView>> = MutableLiveData()
     val addInFavorite: MutableLiveData<String> = MutableLiveData()
-
+    val addInWaiting: MutableLiveData<String> = MutableLiveData()
     fun loadTVShowInfo(id: Int) {
         val disposable = getTVDetailsUseCase.execute(params = GetTVDetailsUseCase.Params(id = id))
             .subscribeOn(Schedulers.io())
@@ -63,6 +65,21 @@ class FullTvInfoViewModel @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread()).subscribe(object : DisposableCompletableObserver(){
                 override fun onComplete() {
                     addInFavorite.value = "TV show added in favorite"
+                }
+
+                override fun onError(e: Throwable) {
+                    handleFailure(e)
+                }
+            })
+    }
+
+    fun addInWaiting(id: Int) {
+        addWaitingSeriesIdUseCase.execute(AddWaitingSeriesIdUseCase.Params(id))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : DisposableCompletableObserver(){
+                override fun onComplete() {
+                    addInWaiting.value = "TV show added in wish list"
                 }
 
                 override fun onError(e: Throwable) {

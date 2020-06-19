@@ -134,6 +134,9 @@ class FullSeriesInfoFragment: DaggerFragment(), OnLikeClickListener {
         viewModel.addInFavorite.observe(viewLifecycleOwner, Observer { message ->
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
         })
+        viewModel.addInWaiting.observe(viewLifecycleOwner, Observer { message ->
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        })
     }
 
     private fun initUI() {
@@ -179,5 +182,9 @@ class FullSeriesInfoFragment: DaggerFragment(), OnLikeClickListener {
 
     override fun onLikeClick(id: Int) {
         viewModel.addInFavorite(id)
+    }
+
+    override fun onWishClick(id: Int) {
+        viewModel.addInWaiting(id)
     }
 }

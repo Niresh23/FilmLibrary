@@ -16,6 +16,7 @@ import com.geekbrains.team.filmlibrary.MainActivity
 import com.geekbrains.team.filmlibrary.R
 import com.geekbrains.team.filmlibrary.adapters.ItemsAdapter
 import com.geekbrains.team.filmlibrary.adapters.OnItemSelectedListener
+import com.geekbrains.team.filmlibrary.model.MovieView
 import com.geekbrains.team.filmlibrary.model.TVShowView
 import com.geekbrains.team.filmlibrary.util.DiffUtilsCallback
 import dagger.android.support.DaggerFragment
@@ -23,18 +24,23 @@ import kotlinx.android.synthetic.main.favorite_inner_fragment.*
 import java.lang.RuntimeException
 import javax.inject.Inject
 
-class FavoriteTVShowFragment: DaggerFragment() {
-
+class WaitingFragment: DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val viewModel by viewModels<FavoriteViewModel>({activity as MainActivity }) { viewModelFactory }
     private lateinit var listener: OnItemSelectedListener
 
-    private val mAdapter: ItemsAdapter<TVShowView, OnItemSelectedListener> by lazy {
-        ItemsAdapter<TVShowView, OnItemSelectedListener> (
+    private val mAdapter: ItemsAdapter<MovieView, OnItemSelectedListener> by lazy {
+        ItemsAdapter<MovieView, OnItemSelectedListener>(
             clickListener = listener,
-            layout = R.layout.landscape_tv_show_card_item
+            layout = R.layout.landscape_card_item
+        )
+    }
+    private val mAdapterSeries: ItemsAdapter<TVShowView, OnItemSelectedListener> by lazy {
+        ItemsAdapter<TVShowView, OnItemSelectedListener>(
+            clickListener = listener,
+            layout = R.layout.landscape_card_item
         )
     }
 
@@ -59,7 +65,7 @@ class FavoriteTVShowFragment: DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         startObservers()
-        loadFavoriteSeries()
+        loadFavoriteMovies()
     }
 
     private fun startObservers() {
@@ -68,7 +74,7 @@ class FavoriteTVShowFragment: DaggerFragment() {
             setProgressBarVisible(false)
         })
 
-        viewModel.favoriteSeriesLiveData.observe(viewLifecycleOwner, Observer {
+        viewModel.waitingMoviesLiveData.observe(viewLifecycleOwner, Observer {
             val diffUtilCallback = DiffUtilsCallback(mAdapter.data, it)
             val diffResult = DiffUtil.calculateDiff(diffUtilCallback)
             mAdapter.update(it)
@@ -79,10 +85,22 @@ class FavoriteTVShowFragment: DaggerFragment() {
             }
             setProgressBarVisible(false)
         })
+        viewModel.waitingSeriesLiveData.observe(viewLifecycleOwner, Observer {
+            val diffUtilCallback = DiffUtilsCallback(mAdapterSeries.data, it)
+            val diffResult = DiffUtil.calculateDiff(diffUtilCallback)
+            mAdapterSeries.update(it)
+            diffResult.dispatchUpdatesTo(mAdapterSeries)
+            series_rv.apply {
+                layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+                adapter = mAdapterSeries
+            }
+            setProgressBarVisible(false)
+        })
     }
 
-    private fun loadFavoriteSeries() {
-        viewModel.loadFavoriteSeries()
+    private fun loadFavoriteMovies() {
+        viewModel.loadWaitingMovies()
+        viewModel.loadWaitingSeries()
     }
 
     private fun setProgressBarVisible(show: Boolean) {
@@ -92,5 +110,4 @@ class FavoriteTVShowFragment: DaggerFragment() {
             progressBar.visibility = View.GONE
         }
     }
-
 }

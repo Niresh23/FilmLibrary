@@ -20,7 +20,8 @@ class FavoriteFragment : Fragment() {
     private val pageTitleList by lazy {
         arrayListOf(
             getString(R.string.movies),
-            getString(R.string.tvShows)
+            getString(R.string.tvShows),
+            getString(R.string.waiting)
         )
     }
 
@@ -53,7 +54,7 @@ class FavoriteFragment : Fragment() {
             TabAdapter(
                 this,
                 this@FavoriteFragment.lifecycle,
-                listOf(FavoriteMovieFragment(), FavoriteTVShowFragment())
+                listOf(FavoriteMovieFragment(), FavoriteTVShowFragment(), WaitingFragment())
             )
         }
 

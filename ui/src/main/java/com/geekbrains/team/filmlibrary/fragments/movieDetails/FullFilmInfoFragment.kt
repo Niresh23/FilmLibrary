@@ -188,4 +188,8 @@ class FullFilmInfoFragment : DaggerFragment(), OnLikeClickListener {
     override fun onLikeClick(id: Int) {
         viewModel.addInFavorite(id)
     }
+
+    override fun onWishClick(id: Int) {
+        viewModel.addInWaiting(id)
+    }
 }

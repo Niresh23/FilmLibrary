@@ -64,6 +64,7 @@ class FavoriteMovieFragment: DaggerFragment() {
     private fun startObservers() {
         viewModel.failure.observe(viewLifecycleOwner, Observer {
             Toast.makeText(context, it.localizedMessage, Toast.LENGTH_LONG).show()
+            setProgressBarVisible(false)
         })
 
         viewModel.favoriteMoviesLiveData.observe(viewLifecycleOwner, Observer {
@@ -75,10 +76,19 @@ class FavoriteMovieFragment: DaggerFragment() {
                 layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
                 adapter = mAdapter
             }
+            setProgressBarVisible(false)
         })
     }
 
     private fun loadFavoriteMovies() {
         viewModel.loadFavoriteMovies()
+    }
+
+    private fun setProgressBarVisible(show: Boolean) {
+        if (show) {
+            progressBar.visibility = View.VISIBLE
+        } else {
+            progressBar.visibility = View.GONE
+        }
     }
 }

@@ -186,7 +186,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:onClick="@{() -> listener.onWishClick(tvShow.id)}">
 
                 <ImageButton
                     android:id="@+id/add_to_list_btn"

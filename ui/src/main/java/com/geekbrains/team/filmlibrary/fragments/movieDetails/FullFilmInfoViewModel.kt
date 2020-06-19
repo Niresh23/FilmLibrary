@@ -6,6 +6,7 @@ import com.geekbrains.team.domain.movies.favoriteMovies.interactor.AddFavoriteMo
 import com.geekbrains.team.domain.movies.model.Movie
 import com.geekbrains.team.domain.movies.movieDetails.interactor.GetMovieDetailsUseCase
 import com.geekbrains.team.domain.movies.similarMovie.interactor.GetSimilarMoviesUseCase
+import com.geekbrains.team.domain.movies.waiting.interactor.AddWaitingMovieIdUseCase
 import com.geekbrains.team.filmlibrary.base.BaseViewModel
 import com.geekbrains.team.filmlibrary.model.PersonView
 import com.geekbrains.team.filmlibrary.model.MovieView
@@ -20,7 +21,8 @@ import javax.inject.Inject
 class FullFilmInfoViewModel @Inject constructor(
     private val useCaseMovieInfo: GetMovieDetailsUseCase,
     private val useCaseSimilarMovies: GetSimilarMoviesUseCase,
-    private val addFavoriteMovieIdUseCase: AddFavoriteMovieIdUseCase
+    private val addFavoriteMovieIdUseCase: AddFavoriteMovieIdUseCase,
+    private val addWaitingMovieIdUseCase: AddWaitingMovieIdUseCase
 ) : BaseViewModel() {
 
     val movieDetailsLiveData: MutableLiveData<MovieView> = MutableLiveData()
@@ -69,6 +71,21 @@ class FullFilmInfoViewModel @Inject constructor(
 
     private fun handleOnSuccessLoadSimilarMovies(movies: List<Movie>) {
         similarMoviesLiveData.value = movies.map { it.toMovieView() }
+    }
+
+    fun addInWaiting(id: Int) {
+        addWaitingMovieIdUseCase.execute(AddWaitingMovieIdUseCase.Params(id))
+            .subscribeOn(io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : DisposableCompletableObserver(){
+                override fun onComplete() {
+                    addInFavorite.value = "Movie added in wish list"
+                }
+
+                override fun onError(e: Throwable) {
+                    handleFailure(e)
+                }
+            })
     }
 
 

@@ -186,7 +186,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:onClick="@{() -> listener.onWishClick(movie.id)}">
 
                 <ImageButton
                     android:id="@+id/add_to_list_btn"
@@ -220,7 +221,7 @@
                     android:layout_gravity="center"
                     android:background="@android:color/transparent"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_favorite_unactive"
+                    android:src="@{movie.like ? @drawable/ic_favorite_active : @drawable/ic_favorite_unactive}"
                     android:onClick="@{() -> listener.onLikeClick(movie.id)}"
                     tools:ignore="ContentDescription" />
 

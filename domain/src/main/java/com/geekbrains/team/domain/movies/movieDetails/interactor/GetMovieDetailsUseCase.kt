@@ -8,6 +8,7 @@ import com.geekbrains.team.domain.movies.commonRepository.MovieCreditsRepository
 import com.geekbrains.team.domain.movies.commonRepository.MoviesGenresRepository
 import com.geekbrains.team.domain.movies.commonRepository.MoviesImagesRepository
 import com.geekbrains.team.domain.movies.commonRepository.VideosRepository
+import com.geekbrains.team.domain.movies.favoriteMovies.repository.FavoriteMoviesRepository
 import com.geekbrains.team.domain.movies.model.*
 import com.geekbrains.team.domain.movies.movieDetails.interactor.GetMovieDetailsUseCase.Companion.DIRECTOR
 import com.geekbrains.team.domain.movies.movieDetails.interactor.GetMovieDetailsUseCase.Companion.ELEMENTS_TO_TAKE
@@ -16,6 +17,7 @@ import com.geekbrains.team.domain.movies.movieDetails.interactor.GetMovieDetails
 import com.geekbrains.team.domain.movies.movieDetails.repository.MovieDetailsRepository
 import io.reactivex.Single
 import io.reactivex.functions.Function5
+import io.reactivex.functions.Function6
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -24,7 +26,8 @@ class GetMovieDetailsUseCase @Inject constructor(
     private val moviesImagesRepository: MoviesImagesRepository,
     private val moviesGenresRepository: MoviesGenresRepository,
     private val movieCreditsRepository: MovieCreditsRepository,
-    @param:Named("MovieVideos") private val moviesVideoRepository: VideosRepository
+    @param:Named("MovieVideos") private val moviesVideoRepository: VideosRepository,
+    private val favoriteMoviesRepository: FavoriteMoviesRepository
 ) :
     UseCase<Movie, GetMovieDetailsUseCase.Params> {
 
@@ -42,11 +45,13 @@ class GetMovieDetailsUseCase @Inject constructor(
             moviesGenresRepository.fetch(),
             moviesVideoRepository.fetch(params.id),
             movieCreditsRepository.fetch(params.id),
-            Function5 { sourceMovie, sourceImages, listGenres, videos, credits ->
+            favoriteMoviesRepository.getFavoriteMoviesIds(),
+            Function6 { sourceMovie, sourceImages, listGenres, videos, credits, ids ->
                 fillMovieGenres(listGenres, sourceMovie)
                 fillMovieCredits(sourceMovie, credits)
                 sourceMovie.images = sourceImages
                 sourceMovie.videos = videos
+                sourceMovie.like = ids.contains(sourceMovie.id)
 
                 sourceMovie
             }
