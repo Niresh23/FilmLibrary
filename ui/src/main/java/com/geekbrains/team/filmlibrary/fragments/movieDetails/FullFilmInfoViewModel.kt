@@ -3,6 +3,7 @@ package com.geekbrains.team.filmlibrary.fragments.movieDetails
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.geekbrains.team.domain.movies.favoriteMovies.interactor.AddFavoriteMovieIdUseCase
+import com.geekbrains.team.domain.movies.favoriteMovies.interactor.DeleteFromFavoriteMoviesUseCase
 import com.geekbrains.team.domain.movies.model.Movie
 import com.geekbrains.team.domain.movies.movieDetails.interactor.GetMovieDetailsUseCase
 import com.geekbrains.team.domain.movies.similarMovie.interactor.GetSimilarMoviesUseCase
@@ -22,7 +23,8 @@ class FullFilmInfoViewModel @Inject constructor(
     private val useCaseMovieInfo: GetMovieDetailsUseCase,
     private val useCaseSimilarMovies: GetSimilarMoviesUseCase,
     private val addFavoriteMovieIdUseCase: AddFavoriteMovieIdUseCase,
-    private val addWaitingMovieIdUseCase: AddWaitingMovieIdUseCase
+    private val addWaitingMovieIdUseCase: AddWaitingMovieIdUseCase,
+    private val deleteFromFavoriteMoviesUseCase: DeleteFromFavoriteMoviesUseCase
 ) : BaseViewModel() {
 
     val movieDetailsLiveData: MutableLiveData<MovieView> = MutableLiveData()
@@ -30,6 +32,7 @@ class FullFilmInfoViewModel @Inject constructor(
     val crewLiveData: MutableLiveData<List<PersonView>> = MutableLiveData()
     val similarMoviesLiveData: MutableLiveData<List<MovieView>> = MutableLiveData()
     val addInFavorite: MutableLiveData<String> = MutableLiveData()
+    val deleteFromFavoriteLiveData: MutableLiveData<String> = MutableLiveData()
 
     var currentMoviePoster = 0
 
@@ -86,6 +89,18 @@ class FullFilmInfoViewModel @Inject constructor(
                     handleFailure(e)
                 }
             })
+    }
+
+    fun deleteFromFavorite(id: Int) {
+        val disposable = deleteFromFavoriteMoviesUseCase.execute(DeleteFromFavoriteMoviesUseCase.Params(id))
+            .subscribeOn(io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(::handleOnSuccessDeleteFromFavorite, ::handleFailure)
+        addDisposable(disposable)
+    }
+
+    private fun handleOnSuccessDeleteFromFavorite() {
+        deleteFromFavoriteLiveData.value = "was deleted"
     }
 
 

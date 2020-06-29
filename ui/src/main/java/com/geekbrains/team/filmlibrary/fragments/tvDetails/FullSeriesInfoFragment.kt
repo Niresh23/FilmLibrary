@@ -133,9 +133,15 @@ class FullSeriesInfoFragment: DaggerFragment(), OnLikeClickListener {
         })
         viewModel.addInFavorite.observe(viewLifecycleOwner, Observer { message ->
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+            loadMovieDetails()
         })
         viewModel.addInWaiting.observe(viewLifecycleOwner, Observer { message ->
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+            loadMovieDetails()
+        })
+        viewModel.deleteFromFavoriteLiveData.observe(viewLifecycleOwner, Observer {
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+            loadMovieDetails()
         })
     }
 
@@ -180,8 +186,10 @@ class FullSeriesInfoFragment: DaggerFragment(), OnLikeClickListener {
         }
     }
 
-    override fun onLikeClick(id: Int) {
-        viewModel.addInFavorite(id)
+    override fun onLikeClick(id: Int, like: Boolean) {
+        if(like) viewModel.deleteFromFavorite(id)
+        else viewModel.addInFavorite(id)
+
     }
 
     override fun onWishClick(id: Int) {

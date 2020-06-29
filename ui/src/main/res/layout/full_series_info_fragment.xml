@@ -152,6 +152,7 @@
                     android:layout_marginTop="16dp"
                     android:gravity="bottom"
                     android:text="@string/director"
+                    android:visibility="@{tvShow.director.empty ? View.GONE : View.VISIBLE}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/creators_tv" />
 
@@ -164,6 +165,7 @@
                     android:layout_marginTop="2dp"
                     android:gravity="bottom"
                     android:text="@{tvShow.director}"
+                    android:visibility="@{tvShow.director.empty ? View.GONE : View.VISIBLE}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/director_title_tv" />
 
@@ -176,6 +178,7 @@
                     android:layout_marginTop="16dp"
                     android:gravity="bottom"
                     android:text="@string/screenPlay"
+                    android:visibility="@{tvShow.writer.empty ? View.GONE : View.VISIBLE}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/director_tv" />
 
@@ -188,6 +191,7 @@
                     android:layout_marginTop="2dp"
                     android:gravity="bottom"
                     android:text="@{tvShow.writer}"
+                    android:visibility="@{tvShow.writer.empty ? View.GONE : View.VISIBLE}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/screenplay_title_tv" />
 
@@ -200,6 +204,7 @@
                     android:layout_marginTop="16dp"
                     android:gravity="bottom"
                     android:text="@string/producer"
+                    android:visibility="@{tvShow.producer.empty ? View.GONE : View.VISIBLE}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/screenplay_tv" />
 
@@ -212,6 +217,7 @@
                     android:layout_marginTop="2dp"
                     android:gravity="bottom"
                     android:text="@{tvShow.producer}"
+                    android:visibility="@{tvShow.producer.empty ? View.GONE : View.VISIBLE}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/producer_title_tv" />
 

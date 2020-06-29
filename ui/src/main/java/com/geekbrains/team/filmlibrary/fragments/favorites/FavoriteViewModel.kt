@@ -79,5 +79,6 @@ class FavoriteViewModel @Inject constructor(
 
     private fun handleOnSuccessLoadWaitingSeries(data: List<TVShow>) {
         waitingSeriesLiveData.value = data.map { it.toTVShowView() }
+        Log.d("FavoriteViewModel.TV", data[0].name)
     }
 }

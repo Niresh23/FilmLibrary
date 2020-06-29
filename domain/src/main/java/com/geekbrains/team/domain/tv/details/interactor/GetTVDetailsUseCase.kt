@@ -9,10 +9,12 @@ import com.geekbrains.team.domain.tv.commonRepository.TVGenresRepository
 import com.geekbrains.team.domain.tv.commonRepository.TVImagesRepository
 import com.geekbrains.team.domain.tv.credits.repository.TVCreditsRepository
 import com.geekbrains.team.domain.tv.details.rerpository.DetailsTVRepository
+import com.geekbrains.team.domain.tv.favorite.repository.FavoriteSeriesRepository
 import com.geekbrains.team.domain.tv.model.TVShow
 import com.geekbrains.team.domain.tv.model.fillTVGenres
 import io.reactivex.Single
 import io.reactivex.functions.Function5
+import io.reactivex.functions.Function6
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -21,7 +23,8 @@ class GetTVDetailsUseCase @Inject constructor(
     private val creditsRepository: TVCreditsRepository,
     private val genres: TVGenresRepository,
     private val images: TVImagesRepository,
-    @param: Named( "TVVideos") private val videos: VideosRepository
+    @param: Named( "TVVideos") private val videos: VideosRepository,
+    private val favoriteSeriesRepository: FavoriteSeriesRepository
     ): UseCase<TVShow, GetTVDetailsUseCase.Params>{
 
     data class Params(val id: Int)
@@ -34,13 +37,20 @@ class GetTVDetailsUseCase @Inject constructor(
     }
 
     override fun execute(params: Params): Single<TVShow> {
-        return Single.zip(detailsRepository.fetch(params.id), creditsRepository.fetch(params.id),
-            genres.fetch(), images.fetch(params.id), videos.fetch(params.id), Function5 {
-                sourceTVShow, credits, listGenres, images, videos ->
+        return Single.zip(
+            detailsRepository.fetch(params.id),
+            creditsRepository.fetch(params.id),
+            genres.fetch(),
+            images.fetch(params.id),
+            videos.fetch(params.id),
+            favoriteSeriesRepository.getFavoriteSeriesIds(),
+            Function6  {
+                sourceTVShow, credits, listGenres, images, videos, ids ->
                 fillTVGenres(listGenres, sourceTVShow)
                 fillTVShowCredits(credits, sourceTVShow)
                 sourceTVShow.images = images
                 sourceTVShow.videos = videos
+                sourceTVShow.like = ids.contains(sourceTVShow.id)
 
                 sourceTVShow
 

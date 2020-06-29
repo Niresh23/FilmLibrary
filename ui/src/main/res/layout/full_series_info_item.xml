@@ -32,10 +32,6 @@
             tools:ignore="ContentDescription"
             tools:src="@drawable/ic_no_backdrop" />
 
-
-
-
-
         <TextView
             android:id="@+id/title_tv"
             style="@style/Headline2"
@@ -204,7 +200,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_time_wait"
                     android:text="@string/add_to_list"
                     android:textAlignment="center" />
             </LinearLayout>
@@ -213,7 +208,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:onClick="@{() -> listener.onLikeClick(tvShow.id, tvShow.like)}">
 
                 <ImageButton
                     android:id="@+id/add_to_favorites_btn"
@@ -222,8 +218,7 @@
                     android:layout_gravity="center"
                     android:background="@android:color/transparent"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_favorite_unactive"
-                    android:onClick="@{() -> listener.onLikeClick(tvShow.id)}"
+                    android:src="@{tvShow.like ? @drawable/ic_favorite_active : @drawable/ic_favorite_unactive}"
                     tools:ignore="ContentDescription" />
 
                 <TextView
@@ -231,7 +226,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="@string/add_to_favorite"
+                    android:text="@{tvShow.like ? @string/added_to_favorite : @string/add_to_favorite}"
                     android:textAlignment="center" />
             </LinearLayout>
 

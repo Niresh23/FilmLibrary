@@ -43,6 +43,8 @@
     <string name="add_to_list">Add to\nwaiting list</string>
     <string name="watch_trailer">Watch\ntrailer</string>
     <string name="add_to_favorite">Add\nto favorites</string>
-    <string name="added_to_list">Added to\nwaiting list</string>
-    <string name="added_to_favorite">Added\nto favorites</string>
+    <string name="added_to_list">Delete from\nwaiting list</string>
+    <string name="added_to_favorite">Delete\nfrom favorites</string>
+    <string name="visible_gone" translatable="false">gone</string>
+    <string name="visible" translatable="false">visible</string>
 </resources>

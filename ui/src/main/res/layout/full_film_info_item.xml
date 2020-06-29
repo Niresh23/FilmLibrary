@@ -212,6 +212,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="@{() -> listener.onLikeClick(movie.id, movie.like)}"
                 android:orientation="vertical" >
 
                 <ImageButton
@@ -222,7 +223,6 @@
                     android:background="@android:color/transparent"
                     android:scaleType="centerCrop"
                     android:src="@{movie.like ? @drawable/ic_favorite_active : @drawable/ic_favorite_unactive}"
-                    android:onClick="@{() -> listener.onLikeClick(movie.id)}"
                     tools:ignore="ContentDescription" />
 
                 <TextView
@@ -230,7 +230,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="@string/add_to_favorite"
+                    android:text="@{movie.like ? @string/added_to_favorite : @string/add_to_favorite}"
                     android:textAlignment="center" />
             </LinearLayout>
 

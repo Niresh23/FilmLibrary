@@ -6,8 +6,8 @@ import com.geekbrains.team.filmlibrary.base.BaseViewModel
 import com.geekbrains.team.filmlibrary.model.PersonView
 import com.geekbrains.team.filmlibrary.model.TVShowView
 import androidx.lifecycle.MutableLiveData
-import com.geekbrains.team.domain.movies.similarMovie.interactor.GetSimilarMoviesUseCase
 import com.geekbrains.team.domain.tv.favorite.interactor.AddFavoriteSeriesUseCase
+import com.geekbrains.team.domain.tv.favorite.interactor.DeleteSeriesFromFavoriteUseCase
 import com.geekbrains.team.domain.tv.model.TVShow
 import com.geekbrains.team.domain.tv.similarTvShows.interactor.GetSimilarTVShowsUseCase
 import com.geekbrains.team.domain.tv.waiting.interactor.AddWaitingSeriesIdUseCase
@@ -16,13 +16,15 @@ import com.geekbrains.team.filmlibrary.model.toTVShowView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableCompletableObserver
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.schedulers.Schedulers.io
 import javax.inject.Inject
 
 class FullTvInfoViewModel @Inject constructor(
     private val getTVDetailsUseCase: GetTVDetailsUseCase,
     private val getSimilarTVShowsUseCase: GetSimilarTVShowsUseCase,
     private val addFavoriteSeriesUseCase: AddFavoriteSeriesUseCase,
-    private val addWaitingSeriesIdUseCase: AddWaitingSeriesIdUseCase
+    private val addWaitingSeriesIdUseCase: AddWaitingSeriesIdUseCase,
+    private val deleteSeriesFromFavoriteUseCase: DeleteSeriesFromFavoriteUseCase
 ): BaseViewModel() {
     val tvDetailsLiveData: MutableLiveData<TVShowView> = MutableLiveData()
     val actorsLiveData: MutableLiveData<List<PersonView>> = MutableLiveData()
@@ -30,9 +32,10 @@ class FullTvInfoViewModel @Inject constructor(
     val similarTVShowsLiveData: MutableLiveData<List<TVShowView>> = MutableLiveData()
     val addInFavorite: MutableLiveData<String> = MutableLiveData()
     val addInWaiting: MutableLiveData<String> = MutableLiveData()
+    val deleteFromFavoriteLiveData: MutableLiveData<String> = MutableLiveData()
     fun loadTVShowInfo(id: Int) {
         val disposable = getTVDetailsUseCase.execute(params = GetTVDetailsUseCase.Params(id = id))
-            .subscribeOn(Schedulers.io())
+            .subscribeOn(io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(::handleOnSuccessLoadMovieDetails, ::handleFailure)
 
@@ -41,7 +44,7 @@ class FullTvInfoViewModel @Inject constructor(
 
     fun loadSimilarTVShows(id: Int, page: Int) {
         val disposable = getSimilarTVShowsUseCase.execute(GetSimilarTVShowsUseCase.Params(id, page))
-            .subscribeOn(Schedulers.io())
+            .subscribeOn(io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(::handleOnSuccessLoadSimilarMovies, ::handleFailure)
         addDisposable(disposable)
@@ -59,10 +62,10 @@ class FullTvInfoViewModel @Inject constructor(
     }
 
     fun addInFavorite(id: Int) {
-        addFavoriteSeriesUseCase.execute(AddFavoriteSeriesUseCase.Params(id)).subscribeOn(
-            Schedulers.io()
-        )
-            .observeOn(AndroidSchedulers.mainThread()).subscribe(object : DisposableCompletableObserver(){
+        addFavoriteSeriesUseCase.execute(AddFavoriteSeriesUseCase.Params(id))
+            .subscribeOn(io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : DisposableCompletableObserver(){
                 override fun onComplete() {
                     addInFavorite.value = "TV show added in favorite"
                 }
@@ -86,5 +89,18 @@ class FullTvInfoViewModel @Inject constructor(
                     handleFailure(e)
                 }
             })
+    }
+
+    fun deleteFromFavorite(id: Int) {
+
+        val disposable = deleteSeriesFromFavoriteUseCase.execute(DeleteSeriesFromFavoriteUseCase.Params(id))
+            .subscribeOn(io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(::handleOnSuccessDeleteFromFavorite, ::handleFailure)
+        addDisposable(disposable)
+    }
+
+    private fun handleOnSuccessDeleteFromFavorite() {
+        deleteFromFavoriteLiveData.value = "was deleted"
     }
 }

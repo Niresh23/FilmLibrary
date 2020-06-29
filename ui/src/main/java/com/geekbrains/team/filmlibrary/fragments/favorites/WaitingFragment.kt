@@ -40,7 +40,7 @@ class WaitingFragment: DaggerFragment() {
     private val mAdapterSeries: ItemsAdapter<TVShowView, OnItemSelectedListener> by lazy {
         ItemsAdapter<TVShowView, OnItemSelectedListener>(
             clickListener = listener,
-            layout = R.layout.landscape_card_item
+            layout = R.layout.landscape_tv_show_card_item
         )
     }
 

@@ -42,7 +42,8 @@ data class TVShow(
     var images: Images? = null,
     var director: String? = null,
     var writer: String? = null,
-    var producer: String? = null
+    var producer: String? = null,
+    var like: Boolean = false
 ) : MovieAndTVShow() {
     data class CreatedBy(
         val creditId: String,

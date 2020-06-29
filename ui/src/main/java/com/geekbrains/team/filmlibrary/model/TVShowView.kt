@@ -22,7 +22,8 @@ data class TVShowView(
     val productionCompanies: String, // Площадка, на которой показывался (строка)
     var director:String? = null,
     var writer: String? = null,
-    var producer: String? = null
+    var producer: String? = null,
+    var like: Boolean = false
 ) {
     data class Actor(
         val id: Int,
@@ -44,16 +45,17 @@ fun TVShow.toTVShowView() =
         // TODO Fix this to feature.
         images = images?.posters?.map { it.url } ?: listOf(),
         firstAirDate = firstAirDate,
-        episodeRunTime = episodeRunTime.toString(),
+        episodeRunTime = episodeRunTime?.joinToString() ?: "",
         lastAirDate = lastAirDate ?: "",
         genres = genres.joinToString(),
         overview = overview,
-        originCountry = originCountry.toString(),
+        originCountry = originCountry?.joinToString { it } ?: "",
         posterPath = posterPath,
-        productionCompanies = productionCompanies?.map { it.name }.toString(),
+        productionCompanies = productionCompanies?.joinToString { it.name } ?: "",
         director = director,
         writer = writer,
-        producer = producer
+        producer = producer,
+        like = like
     )
 
 private fun TVShow.trailer(): String = videos?.firstOrNull {
