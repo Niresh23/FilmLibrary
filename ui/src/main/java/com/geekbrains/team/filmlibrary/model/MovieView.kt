@@ -24,7 +24,8 @@ data class MovieView(
     val writer: String,
     val director: String,
     val releaseYear:String,
-    var like: Boolean = false
+    var like: Boolean = false,
+    var waiting: Boolean = false
 )
 
 fun Movie.toMovieView() = MovieView(
@@ -45,7 +46,8 @@ fun Movie.toMovieView() = MovieView(
     writer = writer ?: "",
     director = director ?: "",
     releaseYear = releaseYear,
-    like = this.like
+    like = this.like,
+    waiting = this.waiting
 )
 
 private fun Movie.movieImages(): List<String> = images?.let {

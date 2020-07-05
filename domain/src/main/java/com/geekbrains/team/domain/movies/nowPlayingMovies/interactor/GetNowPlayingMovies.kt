@@ -1,6 +1,7 @@
 package com.geekbrains.team.domain.movies.nowPlayingMovies.interactor
 
 import com.geekbrains.team.domain.base.UseCase
+import com.geekbrains.team.domain.base.model.Param
 import com.geekbrains.team.domain.movies.commonRepository.MoviesGenresRepository
 import com.geekbrains.team.domain.movies.favoriteMovies.repository.FavoriteMoviesRepository
 import com.geekbrains.team.domain.movies.model.Movie
@@ -30,5 +31,5 @@ class GetNowPlayingMovies @Inject constructor(
             })
 
 
-    data class Params(val page: Int)
+    data class Params(val page: Int): Param()
 }

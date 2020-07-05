@@ -2,6 +2,7 @@ package com.geekbrains.team.domain.movies.movieDetails.interactor
 
 import com.geekbrains.team.domain.base.UseCase
 import com.geekbrains.team.domain.base.model.Credits
+import com.geekbrains.team.domain.base.model.Param
 import com.geekbrains.team.domain.base.model.toMovieActor
 import com.geekbrains.team.domain.base.model.toMovieMember
 import com.geekbrains.team.domain.movies.commonRepository.MovieCreditsRepository
@@ -15,9 +16,11 @@ import com.geekbrains.team.domain.movies.movieDetails.interactor.GetMovieDetails
 import com.geekbrains.team.domain.movies.movieDetails.interactor.GetMovieDetailsUseCase.Companion.PRODUCER
 import com.geekbrains.team.domain.movies.movieDetails.interactor.GetMovieDetailsUseCase.Companion.WRITING
 import com.geekbrains.team.domain.movies.movieDetails.repository.MovieDetailsRepository
+import com.geekbrains.team.domain.movies.waiting.repository.WaitingMoviesRepository
 import io.reactivex.Single
 import io.reactivex.functions.Function5
 import io.reactivex.functions.Function6
+import io.reactivex.functions.Function7
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -27,7 +30,8 @@ class GetMovieDetailsUseCase @Inject constructor(
     private val moviesGenresRepository: MoviesGenresRepository,
     private val movieCreditsRepository: MovieCreditsRepository,
     @param:Named("MovieVideos") private val moviesVideoRepository: VideosRepository,
-    private val favoriteMoviesRepository: FavoriteMoviesRepository
+    private val favoriteMoviesRepository: FavoriteMoviesRepository,
+    private val waitingMoviesRepository: WaitingMoviesRepository
 ) :
     UseCase<Movie, GetMovieDetailsUseCase.Params> {
 
@@ -46,18 +50,22 @@ class GetMovieDetailsUseCase @Inject constructor(
             moviesVideoRepository.fetch(params.id),
             movieCreditsRepository.fetch(params.id),
             favoriteMoviesRepository.getFavoriteMoviesIds(),
-            Function6 { sourceMovie, sourceImages, listGenres, videos, credits, ids ->
+            waitingMoviesRepository.getWaitingMoviesIds(),
+            Function7 { sourceMovie, sourceImages, listGenres,
+                        videos, credits, favoriteIds,
+                        waitingIds ->
                 fillMovieGenres(listGenres, sourceMovie)
                 fillMovieCredits(sourceMovie, credits)
                 sourceMovie.images = sourceImages
                 sourceMovie.videos = videos
-                sourceMovie.like = ids.contains(sourceMovie.id)
+                sourceMovie.like = favoriteIds.contains(sourceMovie.id)
+                sourceMovie.waiting = waitingIds.contains(sourceMovie.id)
 
                 sourceMovie
             }
         )
 
-    data class Params(val id: Int)
+    data class Params(val id: Int): Param()
 }
 
 private fun fillMovieCredits(movie: Movie, credits: Credits) {

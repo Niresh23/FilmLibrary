@@ -18,6 +18,9 @@
         <action
             android:id="@+id/navigateToSeriesDetails"
             app:destination="@id/seriesDetailsFragment" />
+        <action
+            android:id="@+id/navigateToExtensionFragment"
+            app:destination="@id/extensionFragment" />
     </fragment>
 
     <fragment
@@ -101,6 +104,10 @@
             android:id="@+id/navigateToSeriesDetails"
             app:destination="@id/seriesDetailsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/extensionFragment"
+        android:name="com.geekbrains.team.filmlibrary.fragments.extension.ExtensionFragment"
+        android:label="ExtensionFragment" />
 
 
 </navigation>

@@ -53,7 +53,7 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="4dp"
                 android:background="@android:color/transparent"
-                android:src="@{movie.like ? @drawable/ic_favorite_active : @drawable/ic_favorite_inactive }"
+                android:src="@{movie.waiting ? @drawable/ic_time_done : @drawable/ic_time_wait }"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="ContentDescription" />

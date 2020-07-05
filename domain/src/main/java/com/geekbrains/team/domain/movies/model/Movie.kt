@@ -43,7 +43,8 @@ data class Movie(
     var producer: String? = null,
     var writer: String? = null,
     var director: String? = null,
-    var like: Boolean = false
+    var like: Boolean = false,
+    var waiting: Boolean = false
 ) : MovieAndTVShow() {
 
     data class Actor(

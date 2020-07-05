@@ -1,6 +1,7 @@
 package com.geekbrains.team.domain.movies.searchMovies.interactor
 
 import com.geekbrains.team.domain.base.UseCase
+import com.geekbrains.team.domain.base.model.Param
 import com.geekbrains.team.domain.movies.commonRepository.MoviesGenresRepository
 import com.geekbrains.team.domain.movies.favoriteMovies.repository.FavoriteMoviesRepository
 import com.geekbrains.team.domain.movies.model.Movie
@@ -37,5 +38,5 @@ class GetSearchedMovies @Inject constructor(
     data class Params(
         val query: String,
         val page: Int? = null
-    )
+    ): Param()
 }

@@ -13,14 +13,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
+import com.geekbrains.team.domain.base.UseCase
+import com.geekbrains.team.domain.base.model.MovieAndTVShow
+import com.geekbrains.team.domain.base.model.Param
 import com.geekbrains.team.filmlibrary.Const.MIN_LUX
 import com.geekbrains.team.filmlibrary.adapters.OnActorSelectedListener
+import com.geekbrains.team.filmlibrary.adapters.OnExtensionSelectedListener
 import com.geekbrains.team.filmlibrary.adapters.OnItemSelectedListener
 import com.geekbrains.team.filmlibrary.fragments.mainScreen.MainScreenFragmentDirections
 import com.geekbrains.team.filmlibrary.fragments.movieDetails.FullFilmInfoFragmentDirections
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity: AppCompatActivity(), OnItemSelectedListener, OnActorSelectedListener {
+class MainActivity: AppCompatActivity(), OnItemSelectedListener, OnActorSelectedListener, OnExtensionSelectedListener<List<MovieAndTVShow>, Param> {
 
     private val navController by lazy { findNavController(R.id.nav_host_fragment) }
 
@@ -102,6 +106,10 @@ class MainActivity: AppCompatActivity(), OnItemSelectedListener, OnActorSelected
     override fun openActorDetails(id: Int) {
         val directions = FullFilmInfoFragmentDirections.navigateToActorDetails(id)
         navController.navigate(directions)
+    }
+
+    override fun onExtensionSelected(id: Int, useCase: UseCase<List<MovieAndTVShow>, Param>) {
+
     }
 
 }

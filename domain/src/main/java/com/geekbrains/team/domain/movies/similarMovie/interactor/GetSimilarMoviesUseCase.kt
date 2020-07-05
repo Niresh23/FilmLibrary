@@ -1,6 +1,7 @@
 package com.geekbrains.team.domain.movies.similarMovie.interactor
 
 import com.geekbrains.team.domain.base.UseCase
+import com.geekbrains.team.domain.base.model.Param
 import com.geekbrains.team.domain.movies.favoriteMovies.repository.FavoriteMoviesRepository
 import com.geekbrains.team.domain.movies.model.Movie
 import com.geekbrains.team.domain.movies.similarMovie.repository.SimilarMoviesRepository
@@ -22,5 +23,5 @@ class GetSimilarMoviesUseCase @Inject constructor(
                 movies
             })
 
-    data class Param(val id: Int, val page: Int?)
+    data class Param(val id: Int, val page: Int?): com.geekbrains.team.domain.base.model.Param()
 }
