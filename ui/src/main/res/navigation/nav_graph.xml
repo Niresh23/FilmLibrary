@@ -107,7 +107,11 @@
     <fragment
         android:id="@+id/extensionFragment"
         android:name="com.geekbrains.team.filmlibrary.fragments.extension.ExtensionFragment"
-        android:label="ExtensionFragment" />
+        android:label="ExtensionFragment" >
+        <argument
+            android:name="useCase"
+            app:argType="com.geekbrains.team.domain.base.UseCaseAbs" />
+    </fragment>
 
 
 </navigation>

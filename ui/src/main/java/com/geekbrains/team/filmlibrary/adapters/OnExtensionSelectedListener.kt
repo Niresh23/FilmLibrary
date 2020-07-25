@@ -1,7 +1,9 @@
 package com.geekbrains.team.filmlibrary.adapters
 
 import com.geekbrains.team.domain.base.UseCase
+import com.geekbrains.team.domain.base.UseCaseAbs
+import com.geekbrains.team.domain.base.model.Param
 
-interface OnExtensionSelectedListener<T, S> {
-    fun onExtensionSelected(id: Int, useCase: UseCase<T, S>)
+interface OnExtensionSelectedListener {
+    fun onExtensionSelected(useCase: UseCaseAbs, param: Param)
 }

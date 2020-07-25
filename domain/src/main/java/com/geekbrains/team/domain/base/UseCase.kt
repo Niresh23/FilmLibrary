@@ -5,7 +5,7 @@ import io.reactivex.Completable
 import io.reactivex.Single
 import java.io.Serializable
 
-interface UseCase<out R, in Params>: Serializable {
+interface UseCase<out R, in Params> {
     fun execute(params: Params): Single<out R>
 }
 

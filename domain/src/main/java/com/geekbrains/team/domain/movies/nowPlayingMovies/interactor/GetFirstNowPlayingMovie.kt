@@ -2,6 +2,7 @@ package com.geekbrains.team.domain.movies.nowPlayingMovies.interactor
 
 import com.geekbrains.team.domain.base.None
 import com.geekbrains.team.domain.base.UseCase
+import com.geekbrains.team.domain.base.UseCaseAbs
 import com.geekbrains.team.domain.movies.commonRepository.VideosRepository
 import com.geekbrains.team.domain.movies.favoriteMovies.repository.FavoriteMoviesRepository
 import com.geekbrains.team.domain.movies.model.Movie
@@ -14,8 +15,7 @@ class GetFirstNowPlayingMovie @Inject constructor(
     private val nowPlayingMoviesRepository: NowPlayingMoviesRepository,
     @param:Named("MovieVideos") private val moviesVideoRepository: VideosRepository,
     private val favoriteMoviesRepository: FavoriteMoviesRepository
-) :
-    UseCase<Movie, None> {
+) : UseCaseAbs(), UseCase<Movie, None> {
     override fun execute(params: None): Single<Movie> =
         nowPlayingMoviesRepository.fetch()
             .flatMap { movies -> Single.just(movies.first()) }

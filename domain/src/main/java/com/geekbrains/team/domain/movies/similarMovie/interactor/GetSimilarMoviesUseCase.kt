@@ -1,6 +1,7 @@
 package com.geekbrains.team.domain.movies.similarMovie.interactor
 
 import com.geekbrains.team.domain.base.UseCase
+import com.geekbrains.team.domain.base.UseCaseAbs
 import com.geekbrains.team.domain.base.model.Param
 import com.geekbrains.team.domain.movies.favoriteMovies.repository.FavoriteMoviesRepository
 import com.geekbrains.team.domain.movies.model.Movie

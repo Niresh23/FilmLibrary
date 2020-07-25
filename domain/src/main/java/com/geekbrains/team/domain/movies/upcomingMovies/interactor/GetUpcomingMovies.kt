@@ -1,6 +1,7 @@
 package com.geekbrains.team.domain.movies.upcomingMovies.interactor
 
 import com.geekbrains.team.domain.base.UseCase
+import com.geekbrains.team.domain.base.UseCaseAbs
 import com.geekbrains.team.domain.base.model.Param
 import com.geekbrains.team.domain.movies.favoriteMovies.repository.FavoriteMoviesRepository
 import com.geekbrains.team.domain.movies.model.Movie
@@ -12,7 +13,7 @@ import javax.inject.Inject
 
 class GetUpcomingMovies @Inject constructor(
     private val repository: UpcomingMoviesRepository,
-    private val waitingMoviesRepository: WaitingMoviesRepository) :
+    private val waitingMoviesRepository: WaitingMoviesRepository) : UseCaseAbs(),
     UseCase<List<Movie>, GetUpcomingMovies.Params> {
     override fun execute(params: Params): Single<List<Movie>> = Single.zip(
         repository.fetch(page = params.page), waitingMoviesRepository.getWaitingMoviesIds(),
