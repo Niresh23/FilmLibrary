@@ -39,10 +39,11 @@ class FullFilmInfoFragment : DaggerFragment(), OnLikeClickListener {
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val viewModel by viewModels<FullFilmInfoViewModel> { viewModelFactory }
+
     lateinit var binding: FullFilmInfoFragmentBinding
     private val onLikeClickListener: OnLikeClickListener = this
     private lateinit var onActorSelectedListener: OnActorSelectedListener
-    private lateinit var listener: OnItemSelectedListener
+    private lateinit var onItemSelectedListener: OnItemSelectedListener
 
 
     private lateinit var mIndicator: Indicator<MovieView, OnLikeClickListener>
@@ -57,7 +58,7 @@ class FullFilmInfoFragment : DaggerFragment(), OnLikeClickListener {
     }
 
     private val similarMoviesAdapter by lazy {
-        ItemsAdapter<MovieView, OnItemSelectedListener>(clickListener = listener,
+        ItemsAdapter<MovieView, OnItemSelectedListener>(clickListener = onItemSelectedListener,
             layout = R.layout.small_card_item)
     }
 
@@ -71,7 +72,7 @@ class FullFilmInfoFragment : DaggerFragment(), OnLikeClickListener {
         }
 
         if (context is OnItemSelectedListener) {
-            listener = context
+            onItemSelectedListener = context
         } else {
             throw RuntimeException("$context must implement OnItemSelectedListener")
         }
@@ -90,7 +91,7 @@ class FullFilmInfoFragment : DaggerFragment(), OnLikeClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        listener.showProgress()
+        onItemSelectedListener.showProgress()
 
         initUI()
         startObservers()
@@ -118,7 +119,7 @@ class FullFilmInfoFragment : DaggerFragment(), OnLikeClickListener {
     private fun startObservers() {
         viewModel.failure.observe(viewLifecycleOwner, Observer { msg ->
             Toast.makeText(context, msg.localizedMessage, Toast.LENGTH_LONG).show()
-            listener.hideProgress()
+            onItemSelectedListener.hideProgress()
         })
 
         viewModel.movieDetailsLiveData.observe(viewLifecycleOwner, Observer { data ->
@@ -128,7 +129,8 @@ class FullFilmInfoFragment : DaggerFragment(), OnLikeClickListener {
                 mIndicator.startIndicators()
                 mIndicator.setCurrentIndicator(viewModel.currentMoviePoster)
                 binding.movie = it
-                listener.hideProgress()
+                binding.listener = onItemSelectedListener
+                onItemSelectedListener.hideProgress()
             }
         })
 

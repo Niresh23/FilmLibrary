@@ -17,6 +17,14 @@
             name="tvShow"
             type="com.geekbrains.team.filmlibrary.model.TVShowView" />
 
+        <variable
+            name="listener"
+            type="com.geekbrains.team.filmlibrary.adapters.OnItemSelectedListener" />
+
+        <variable
+            name="enumUseCases"
+            type="com.geekbrains.team.filmlibrary.adapters.UseCasesEnum" />
+
     </data>
 
 
@@ -238,6 +246,7 @@
                     android:layout_marginEnd="16dp"
                     android:background="@android:color/transparent"
                     android:src="@drawable/ic_chevron_right"
+                    android:onClick="@{() -> listener.openExtensionFragmentWithParameter(enumUseCases.MOVIE_CREW.name(), movie.id)}"
                     app:layout_constraintBottom_toBottomOf="@id/whole_crew_tv"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/whole_crew_tv"
@@ -270,6 +279,7 @@
                     android:layout_marginEnd="16dp"
                     android:background="@android:color/transparent"
                     android:src="@drawable/ic_chevron_right"
+                    android:onClick="@{() -> listener.openExtensionFragmentWithParameter(enumUseCases.MOVIE_ACTORS.name(), movie.id)}"
                     app:layout_constraintBottom_toBottomOf="@id/actors_tv"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/actors_tv"
@@ -309,6 +319,7 @@
                     android:layout_marginEnd="16dp"
                     android:background="@android:color/transparent"
                     android:src="@drawable/ic_chevron_right"
+                    android:onClick="@{() -> listener.openExtensionFragmentWithParameter(enumUseCases.SIMILAR_MOVIE.name(), movie.id)}"
                     app:layout_constraintBottom_toBottomOf="@id/similar_tv"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/similar_tv"

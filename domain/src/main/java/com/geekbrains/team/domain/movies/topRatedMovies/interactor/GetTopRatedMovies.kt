@@ -2,6 +2,7 @@ package com.geekbrains.team.domain.movies.topRatedMovies.interactor
 
 import com.geekbrains.team.domain.base.UseCase
 import com.geekbrains.team.domain.base.UseCaseAbs
+import com.geekbrains.team.domain.base.model.Param
 import com.geekbrains.team.domain.movies.favoriteMovies.repository.FavoriteMoviesRepository
 import com.geekbrains.team.domain.movies.model.Movie
 import com.geekbrains.team.domain.movies.topRatedMovies.repository.TopRatedMoviesRepository
@@ -22,5 +23,5 @@ class GetTopRatedMovies @Inject constructor(
         })
 
 
-    data class Params(val page: Int)
+    data class Params(val page: Int): Param()
 }

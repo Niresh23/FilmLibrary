@@ -14,7 +14,6 @@ data class ActorMovieCreditsResponse(
         val character: String,
         val title: String,
 
-
         @SerializedName("poster_path")
         val posterPath: String?
     )
@@ -36,12 +35,12 @@ fun ActorMovieCreditsResponse.toActorCreditsInfo() = ActorCreditsInfo(
         id = it.id,
         title = it.title,
         character = it.character,
-        posterPath =  Const.IMAGE_PREFIX + it.posterPath
+        posterPath =  it.posterPath?.let {poster -> Const.IMAGE_PREFIX + poster } ?: ""
     ) },
     crew = this.crew.map { ActorCreditsInfo.JobInfo (
         id = it.id,
         title = it.title,
         job = it.job,
-        posterPath = Const.IMAGE_PREFIX + it.posterPath
+        posterPath = it.posterPath?.let {poster -> Const.IMAGE_PREFIX + poster } ?: ""
     ) }
 )

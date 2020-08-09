@@ -1,5 +1,6 @@
 package com.geekbrains.team.filmlibrary.fragments.actorDetails
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -24,6 +25,7 @@ import com.geekbrains.team.filmlibrary.adapters.OnItemSelectedListener
 import com.geekbrains.team.filmlibrary.model.toPersonView
 import com.geekbrains.team.filmlibrary.util.DiffUtilsCallback
 import kotlinx.android.synthetic.main.full_actor_info_fragment.*
+import java.lang.IllegalArgumentException
 import javax.inject.Inject
 
 @Suppress("NAME_SHADOWING")
@@ -34,6 +36,7 @@ class FullActorInfoFragment: DaggerFragment() {
 
     private val viewModel by viewModels<FullActorInfoViewModel> {viewModelFactory}
     lateinit var binding: FullActorInfoFragmentBinding
+    lateinit var onItemSelectedListener: OnItemSelectedListener
 
     private val movieCastAdapter by lazy {
         ItemsAdapter<PersonView, OnItemSelectedListener>(null, layout = R.layout.small_actor_card_item)
@@ -51,6 +54,15 @@ class FullActorInfoFragment: DaggerFragment() {
         ItemsAdapter<PersonView, OnItemSelectedListener>(null, layout = R.layout.small_actor_card_item)
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnItemSelectedListener) {
+            onItemSelectedListener = context
+        } else {
+            throw RuntimeException("$context must implement OnItemSelectedListener")
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -58,6 +70,7 @@ class FullActorInfoFragment: DaggerFragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.full_actor_info_fragment,
             null, false)
+        binding.listener = onItemSelectedListener
         return binding.root
     }
 

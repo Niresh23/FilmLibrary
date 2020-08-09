@@ -52,6 +52,9 @@ object ViewHolderFactory {
             R.layout.small_series_card_item -> SmallSeriesCardHolder(
                 SmallSeriesCardItemBinding.inflate(inflater, parent, false)
             )
+            R.layout.landscape_actor_card_item -> LandscapeActorCardHolder(
+                LandscapeActorCardItemBinding.inflate(inflater, parent, false)
+            )
 
             else -> throw Exception("Wrong view type")
         }
@@ -171,6 +174,17 @@ object ViewHolderFactory {
         override fun <T, S> bind(data: T, position: Int, listener: S?) {
             binding.listener = listener as? OnItemSelectedListener
             binding.tvShow = data as? TVShowView
+            binding.executePendingBindings()
+        }
+
+    }
+
+    class LandscapeActorCardHolder(
+        private val binding: LandscapeActorCardItemBinding
+    ): RecyclerView.ViewHolder(binding.root), Binder {
+        override fun <T, S> bind(data: T, position: Int, listener: S?) {
+            binding.listener = listener as? OnActorSelectedListener
+            binding.actorInfo = data as? PersonView
             binding.executePendingBindings()
         }
 

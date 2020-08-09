@@ -1,6 +1,7 @@
 package com.geekbrains.team.domain.movies.waiting.interactor
 
 import com.geekbrains.team.domain.base.UseCaseCompletable
+import com.geekbrains.team.domain.base.model.Param
 import com.geekbrains.team.domain.movies.waiting.repository.WaitingMoviesRepository
 import io.reactivex.Completable
 import javax.inject.Inject
@@ -11,7 +12,7 @@ class AddWaitingMovieIdUseCase @Inject constructor(
 
     data class Params(
         val id: Int
-    )
+    ): Param()
 
     override fun execute(params: Params): Completable =
         repository.addWaitingMovieId(params.id)

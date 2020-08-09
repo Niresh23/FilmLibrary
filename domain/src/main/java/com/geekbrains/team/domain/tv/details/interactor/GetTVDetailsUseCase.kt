@@ -2,6 +2,7 @@ package com.geekbrains.team.domain.tv.details.interactor
 
 import com.geekbrains.team.domain.base.UseCase
 import com.geekbrains.team.domain.base.model.Credits
+import com.geekbrains.team.domain.base.model.Param
 import com.geekbrains.team.domain.base.model.toTVShowActor
 import com.geekbrains.team.domain.base.model.toTVShowMember
 import com.geekbrains.team.domain.movies.commonRepository.VideosRepository
@@ -27,7 +28,7 @@ class GetTVDetailsUseCase @Inject constructor(
     private val favoriteSeriesRepository: FavoriteSeriesRepository
     ): UseCase<TVShow, GetTVDetailsUseCase.Params>{
 
-    data class Params(val id: Int)
+    data class Params(val id: Int): Param()
 
     companion object {
         const val DIRECTOR = "DIRECTOR"

@@ -1,6 +1,5 @@
 package com.geekbrains.team.filmlibrary.fragments.movieDetails
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.geekbrains.team.domain.movies.favoriteMovies.interactor.AddFavoriteMovieIdUseCase
 import com.geekbrains.team.domain.movies.favoriteMovies.interactor.DeleteFromFavoriteMoviesUseCase
@@ -15,7 +14,6 @@ import com.geekbrains.team.filmlibrary.model.toPersonView
 import com.geekbrains.team.filmlibrary.model.toMovieView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableCompletableObserver
-import io.reactivex.schedulers.Schedulers
 import io.reactivex.schedulers.Schedulers.io
 import javax.inject.Inject
 
@@ -46,7 +44,7 @@ class FullFilmInfoViewModel @Inject constructor(
     }
 
     fun loadSimilarMovies(id: Int, page: Int? = null) {
-        val disposable = useCaseSimilarMovies.execute(GetSimilarMoviesUseCase.Param(id, page))
+        val disposable = useCaseSimilarMovies.execute(GetSimilarMoviesUseCase.Params(id, page))
             .subscribeOn(io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(::handleOnSuccessLoadSimilarMovies, ::handleFailure)

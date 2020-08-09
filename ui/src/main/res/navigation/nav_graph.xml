@@ -76,6 +76,9 @@
         <action
             android:id="@+id/navigateToActorDetails"
             app:destination="@id/actorDetailsFragment" />
+        <action
+            android:id="@+id/navigateToExtensionFragment"
+            app:destination="@id/extensionFragment" />
     </fragment>
 
     <fragment
@@ -88,6 +91,9 @@
         <action
             android:id="@+id/navigateToMovieDetails"
             app:destination="@id/movieDetailsFragment" />
+        <action
+            android:id="@+id/navigateToExtensionFragment"
+            app:destination="@id/extensionFragment" />
     </fragment>
 
     <fragment
@@ -103,14 +109,30 @@
         <action
             android:id="@+id/navigateToSeriesDetails"
             app:destination="@id/seriesDetailsFragment" />
+        <action
+            android:id="@+id/navigateToExtensionFragment"
+            app:destination="@id/extensionFragment" />
     </fragment>
     <fragment
         android:id="@+id/extensionFragment"
         android:name="com.geekbrains.team.filmlibrary.fragments.extension.ExtensionFragment"
-        android:label="ExtensionFragment" >
+        android:label="ExtensionFragment">
         <argument
-            android:name="useCase"
-            app:argType="com.geekbrains.team.domain.base.UseCaseAbs" />
+            android:name="useCasesArgs"
+            app:argType="string" />
+        <argument
+            android:name="id"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <action
+            android:id="@+id/navigateToActorDetails"
+            app:destination="@id/actorDetailsFragment" />
+        <action
+            android:id="@+id/navigateToMovieDetails"
+            app:destination="@id/movieDetailsFragment" />
+        <action
+            android:id="@+id/navigateToSeriesDetails"
+            app:destination="@id/seriesDetailsFragment" />
     </fragment>
 
 

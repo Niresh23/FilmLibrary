@@ -42,12 +42,12 @@ fun ActorCreditsInfo.MovieInfo.toPersonView(): PersonView = PersonView(
     id = this.id,
     name = this.title,
     character = this.character,
-    posterPath = this.posterPath
+    posterPath = this.posterPath ?: ""
 )
 
 fun ActorCreditsInfo.JobInfo.toPersonView(): PersonView = PersonView(
     id = this.id,
     name = this.title,
     character = this.job,
-    posterPath = this.posterPath
+    posterPath = this.posterPath ?: ""
 )

@@ -2,6 +2,7 @@ package com.geekbrains.team.domain.tv.similarTvShows.interactor
 
 import com.geekbrains.team.domain.base.UseCase
 import com.geekbrains.team.domain.base.UseCaseAbs
+import com.geekbrains.team.domain.base.model.Param
 import com.geekbrains.team.domain.tv.favorite.repository.FavoriteSeriesRepository
 import com.geekbrains.team.domain.tv.model.TVShow
 import com.geekbrains.team.domain.tv.similarTvShows.repository.SimilarTVShowsRepository
@@ -12,11 +13,11 @@ import javax.inject.Inject
 class GetSimilarTVShowsUseCase @Inject constructor(
     private val repository: SimilarTVShowsRepository,
     private val favoriteSeriesRepository: FavoriteSeriesRepository
-): UseCaseAbs(), UseCase<List<TVShow>, GetSimilarTVShowsUseCase.Params> {
+): UseCase<List<TVShow>, GetSimilarTVShowsUseCase.Params> {
     data class Params(
         val id: Int,
         val page: Int
-    )
+    ): Param()
 
     override fun execute(params: Params): Single<out List<TVShow>> = Single.zip(
         repository.fetch(id = params.id, page = params.page),

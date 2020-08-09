@@ -2,6 +2,7 @@ package com.geekbrains.team.domain.tv.nowPlayingTV.interactor
 
 import com.geekbrains.team.domain.base.UseCase
 import com.geekbrains.team.domain.base.UseCaseAbs
+import com.geekbrains.team.domain.base.model.Param
 import com.geekbrains.team.domain.tv.favorite.repository.FavoriteSeriesRepository
 import com.geekbrains.team.domain.tv.model.TVShow
 import com.geekbrains.team.domain.tv.nowPlayingTV.repository.NowPlayingTVRepository
@@ -11,7 +12,7 @@ import javax.inject.Inject
 
 class GetNowPlayingTV @Inject constructor(
     private val repository: NowPlayingTVRepository,
-    private val favoriteSeriesRepository: FavoriteSeriesRepository) : UseCaseAbs(),
+    private val favoriteSeriesRepository: FavoriteSeriesRepository) :
     UseCase<List<TVShow>, GetNowPlayingTV.Params> {
     override fun execute(params: Params): Single<List<TVShow>> =
         Single.zip(
@@ -23,5 +24,5 @@ class GetNowPlayingTV @Inject constructor(
             }
         )
 
-    data class Params(val page: Int)
+    data class Params(val page: Int): Param()
 }

@@ -1,6 +1,7 @@
 package com.geekbrains.team.domain.tv.searchTV.interactor
 
 import com.geekbrains.team.domain.base.UseCase
+import com.geekbrains.team.domain.base.model.Param
 import com.geekbrains.team.domain.tv.searchTV.repository.SearchTVRepository
 import com.geekbrains.team.domain.tv.commonRepository.TVGenresRepository
 import com.geekbrains.team.domain.tv.favorite.repository.FavoriteSeriesRepository
@@ -35,5 +36,5 @@ class GetSearchedTV @Inject constructor(
     data class Params(
         val query: String,
         val page: Int? = null
-    )
+    ): Param()
 }

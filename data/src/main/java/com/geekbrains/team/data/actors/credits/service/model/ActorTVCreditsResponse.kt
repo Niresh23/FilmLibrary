@@ -36,12 +36,12 @@ fun ActorTVCreditsResponse.toActorCreditsInfo() = ActorCreditsInfo(
         id = it.id,
         title = it.name,
         character = it.character,
-        posterPath =  Const.IMAGE_PREFIX + it.posterPath
+        posterPath =  it.posterPath?.let {poster -> Const.IMAGE_PREFIX + poster } ?: ""
     ) },
     crew = this.crew.map { ActorCreditsInfo.JobInfo (
         id = it.id,
         title = it.name,
         job = it.job,
-        posterPath = Const.IMAGE_PREFIX + it.posterPath
+        posterPath = it.posterPath?.let {poster -> Const.IMAGE_PREFIX + poster } ?: ""
     ) }
 )

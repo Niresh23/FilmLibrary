@@ -146,8 +146,6 @@ class FullSeriesInfoFragment: DaggerFragment(), OnLikeClickListener {
     }
 
     private fun initUI() {
-        val navController = findNavController()
-        val appBarConfiguration = AppBarConfiguration(navController.graph)
         mIndicator = Indicator(context, indicator, indicator_item, infoAdapter)
         description_tv.setOnClickListener {
             if (description_tv.maxLines == Const.DESCRIPTION_MAX_LINES)

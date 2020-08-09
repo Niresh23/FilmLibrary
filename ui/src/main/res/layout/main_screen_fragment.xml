@@ -20,6 +20,9 @@
         <variable
             name="listener"
             type="com.geekbrains.team.filmlibrary.adapters.OnItemSelectedListener" />
+        <variable
+            name="enumUseCases"
+            type="com.geekbrains.team.filmlibrary.adapters.UseCasesEnum" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -92,6 +95,7 @@
                     android:layout_marginEnd="15dp"
                     android:background="@android:color/transparent"
                     android:src="@drawable/ic_chevron_right"
+                    android:onClick="@{() -> listener.openExtensionFragment(enumUseCases.NOW_PLAYING_MOVIES.name())}"
                     app:layout_constraintBottom_toBottomOf="@id/today_tv"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/today_tv"
@@ -121,6 +125,7 @@
                     android:layout_marginEnd="15dp"
                     android:background="@android:color/transparent"
                     android:src="@drawable/ic_chevron_right"
+                    android:onClick="@{() -> listener.openExtensionFragment(enumUseCases.UPCOMING_MOVIES.name())}"
                     app:layout_constraintBottom_toBottomOf="@id/soon_tv"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/soon_tv"

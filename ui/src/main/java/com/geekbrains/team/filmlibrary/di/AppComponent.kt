@@ -20,7 +20,7 @@ import javax.inject.Singleton
         FullFilmInfoFragmentModule::class, MovieCreditsModule::class, SimilarMoviesModule::class,
         SimilarTVShowsModule::class,
         DetailsTVModule::class, TVCreditsModule::class, ActorCreditsModule::class, ActorDetailsModule::class,
-        FullActorInfoFragmentModule::class, FullSeriesInfoFragmentModule::class]
+        FullActorInfoFragmentModule::class, FullSeriesInfoFragmentModule::class, ExtensionFragmentModule::class]
 )
 interface AppComponent : AndroidInjector<App> {
     @Component.Factory
