@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <PreferenceCategory android:title="@string/general">
+
+
+        <ListPreference
+            android:title="@string/language"
+            android:defaultValue="0"
+            android:entries="@array/pref_language_entries"
+            android:entryValues="@array/pref_language_values"
+            android:key="@string/language"/>
+
+        <SwitchPreferenceCompat
+            android:title="@string/night_mode"
+            android:key="@string/night_mode"
+            android:defaultValue="false"/>
+
+        <SwitchPreferenceCompat
+            android:title="@string/adaptive_brightness"
+            android:key="@string/adaptive_brightness"
+            android:defaultValue="false"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

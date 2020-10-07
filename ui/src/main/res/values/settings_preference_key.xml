@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="language_pref" translatable="false">english</string>
+    <bool name="dark_mode">false</bool>
+    <bool name="adaptive_brightness">false</bool>
+
+</resources>

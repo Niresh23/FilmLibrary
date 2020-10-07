@@ -47,4 +47,13 @@
     <string name="added_to_favorite">Delete\nfrom favorites</string>
     <string name="visible_gone" translatable="false">gone</string>
     <string name="visible" translatable="false">visible</string>
+    <string name="general">General</string>
+    <string name="language">Language</string>
+    <string name="english">English</string>
+    <string name="russian">Russian</string>
+    <string name="night_mode">Night mode</string>
+    <string name="adaptive_brightness">Adaptive brightness</string>
+    <string name="enRegion" translatable="false">en_US</string>
+    <string name="ruRegion" translatable="false">ru_RU</string>
+
 </resources>

@@ -36,6 +36,9 @@
         <action
             android:id="@+id/navigateToSeriesDetails"
             app:destination="@id/seriesDetailsFragment" />
+        <action
+            android:id="@+id/navigateToSettingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
 
     <fragment
@@ -51,6 +54,9 @@
         <action
             android:id="@+id/navigateToSeriesDetails"
             app:destination="@id/seriesDetailsFragment" />
+        <action
+            android:id="@+id/navigateToSettingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
 
     <fragment
@@ -63,6 +69,12 @@
         <action
             android:id="@+id/navigateToSeriesDetails"
             app:destination="@id/seriesDetailsFragment" />
+        <action
+            android:id="@+id/navigateToSettingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_favoritesFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/movieDetailsFragment"
@@ -79,6 +91,9 @@
         <action
             android:id="@+id/navigateToExtensionFragment"
             app:destination="@id/extensionFragment" />
+        <action
+            android:id="@+id/navigateToSettingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
 
     <fragment
@@ -94,6 +109,9 @@
         <action
             android:id="@+id/navigateToExtensionFragment"
             app:destination="@id/extensionFragment" />
+        <action
+            android:id="@+id/navigateToSettingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
 
     <fragment
@@ -112,6 +130,9 @@
         <action
             android:id="@+id/navigateToExtensionFragment"
             app:destination="@id/extensionFragment" />
+        <action
+            android:id="@+id/navigateToSettingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/extensionFragment"
@@ -133,6 +154,15 @@
         <action
             android:id="@+id/navigateToSeriesDetails"
             app:destination="@id/seriesDetailsFragment" />
+        <action
+            android:id="@+id/navigateToSettingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.geekbrains.team.filmlibrary.fragments.settings.SettingsFragment"
+        android:label="ExtensionFragment">
     </fragment>
 
 

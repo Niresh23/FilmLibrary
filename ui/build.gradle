@@ -90,6 +90,8 @@ dependencies {
     //ViewPager2
     def viewpager2_version = "1.0.0"
     implementation "androidx.viewpager2:viewpager2:$viewpager2_version"
+    //Preference
+    implementation "androidx.preference:preference:1.1.1"
 
     /**
      * Navigation component

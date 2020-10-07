@@ -46,4 +46,10 @@
     <string name="add_to_favorite">Добавить\nв Избранное</string>
     <string name="added_to_list">Добавлено\nв Лист ожидания</string>
     <string name="added_to_favorite">Добавлено\nв Избранное</string>
+    <string name="general">Основные</string>
+    <string name="language">Язык</string>
+    <string name="english">Английский</string>
+    <string name="russian">Русский</string>
+    <string name="night_mode">Night mode</string>
+    <string name="adaptive_brightness">Adaptive brightness</string>
 </resources>
